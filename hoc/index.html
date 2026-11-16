@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sổ học · Nihongo Desk</title>
-<meta name="description" content="41 chữ Hán và 10 bài đọc JPD133 (Dekiru Nihongo bài 8–11), kèm tranh kiểm tra.">
+<meta name="description" content="41 chữ Hán, 11 bài đọc và 10 tranh kiểm tra JPD133 (Dekiru Nihongo bài 8–11).">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Klee+One:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap">
-<link rel="stylesheet" href="../style.css?v=4">
-<link rel="stylesheet" href="study.css?v=4">
+<link rel="stylesheet" href="../style.css?v=5">
+<link rel="stylesheet" href="study.css?v=5">
 <script>
 document.documentElement.classList.add("js");
 /* ?bai=8 from the home lesson cards: preselect that lesson in every filter, then tidy the URL. */
@@ -26,21 +26,25 @@ document.documentElement.classList.add("js");
 <div class="bg" aria-hidden="true"></div>
 
 <nav class="sidebar glass reveal" aria-label="Mục học">
-  <a class="side-btn" href="https://mazii.net/vi-VN" target="_blank" rel="noopener" aria-label="Tra từ điển (Mazii)" data-label="Tra từ điển">
-    <svg viewBox="0 0 24 24" class="search-ico" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-  </a>
-  <a class="side-btn" href="../" aria-label="Trang chủ" data-label="Trang chủ"><span class="g" lang="ja">家</span></a>
-  <a class="side-btn" href="#kanji" data-view="kanji" aria-label="Học chữ Hán" data-label="Học chữ Hán"><span class="g" lang="ja">漢</span></a>
-  <a class="side-btn" href="#doc" data-view="doc" aria-label="Bài đọc" data-label="Bài đọc"><span class="g" lang="ja">読</span></a>
-  <a class="side-btn" href="#tranh" data-view="tranh" aria-label="Tranh kiểm tra" data-label="Tranh kiểm tra"><span class="g" lang="ja">絵</span></a>
+  <a class="side-btn" href="https://mazii.net/vi-VN" target="_blank" rel="noopener"><span class="g g-search" aria-hidden="true"><svg viewBox="0 0 24 24" class="search-ico"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><span class="cap">Tra từ</span></a>
+  <a class="side-btn" href="../"><span class="g g3" lang="ja">ホーム</span><span class="cap">Trang chủ</span></a>
+  <a class="side-btn" href="#kanji" data-view="kanji"><span class="g g2" lang="ja">漢字</span><span class="cap">Chữ Hán</span></a>
+  <a class="side-btn" href="#doc" data-view="doc"><span class="g g2" lang="ja">読解</span><span class="cap">Đọc hiểu</span></a>
+  <a class="side-btn" href="#tranh" data-view="tranh"><span class="g g1" lang="ja">絵</span><span class="cap">Tranh</span></a>
+  <button class="side-btn" type="button" id="castToggle" aria-pressed="true"><span class="g g1" lang="ja">人</span><span class="cap">Nhân vật</span></button>
 </nav>
 
 <main class="wrap reveal">
   <header class="top">
     <div class="top-title">
       <a class="back-home" href="../">← Trang chủ</a>
-      <h1><span>漢字</span>Kanji &amp; Đọc hiểu · Bài 8–11</h1>
-      <p>41 chữ Hán của JPD133 (Dekiru Nihongo bài 8–11) và 10 bài đọc. Mỗi bài đọc dùng đúng 5 chữ Hán và 5 từ katakana, không có furigana; cách đọc nằm ở cuối mỗi bài để tra.</p>
+      <h1><span lang="ja">漢字</span>Kanji &amp; Đọc hiểu</h1>
+      <p class="subtitle">JPD133 · Dekiru Nihongo bài 8–11</p>
+      <ul class="stats">
+        <li><b>41</b> chữ Hán</li>
+        <li><b>11</b> bài đọc</li>
+        <li><b>10</b> tranh kiểm tra</li>
+      </ul>
     </div>
     <div class="top-side" aria-hidden="true">
       <div class="mini-clock" id="miniClock">00:00</div>
@@ -69,27 +73,26 @@ document.documentElement.classList.add("js");
   </section>
 
   <section id="view-doc" hidden>
-    <div class="howto">
-      <strong>Cách luyện mỗi bài</strong>
+    <details class="howto"><summary>Cách luyện mỗi bài</summary>
       <ol>
         <li>Đọc 5 chữ Hán và 5 từ katakana ở khung trên cùng trước.</li>
         <li>Đọc to bài văn. Chữ Hán nào chưa nhớ cách đọc thì tra ở mục “Tra cách đọc” cuối mỗi bài.</li>
         <li>Trả lời 3 câu hỏi bằng tiếng Nhật, rồi mới mở đáp án và bản dịch.</li>
       </ol>
-    </div>
+    </details>
+    <p class="lookup-hint">Mẹo: di chuột (trên điện thoại thì chạm) vào chữ Hán hoặc katakana trong bài để xem cách đọc và nghĩa.</p>
     <div class="sub"><div class="filters" id="doc-filter"></div></div>
     <div class="plist hl" id="doc-out"></div>
   </section>
 
   <section id="view-tranh" hidden>
-    <div class="howto">
-      <strong>Cách luyện với tranh</strong>
+    <details class="howto"><summary>Cách luyện với tranh</summary>
       <ol>
         <li>Nhìn tranh, đọc câu hỏi rồi tự nói hoặc gõ câu trả lời vào ô.</li>
         <li>Chưa nghĩ ra thì bấm “Gợi ý” để xem nghĩa câu hỏi, mẫu ngữ pháp và từ cần dùng.</li>
         <li>Bấm “Xem đáp án” để so sánh, xem bản dịch và mục ngữ pháp trong tài liệu JPD133.</li>
       </ol>
-    </div>
+    </details>
     <div class="sub"><div class="filters" id="tranh-filter"></div></div>
     <div class="tlist" id="tranh-out"></div>
   </section>
@@ -113,7 +116,7 @@ document.documentElement.classList.add("js");
   var D = JSON.parse(document.getElementById('data').textContent);
   function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
   function jp(s){
-    return s.replace(/\{([^|}]+)\|([^}]+)\}/g,'<span class="k">$1</span>')
+    return s.replace(/\{([^|}]+)\|([^}]+)\}/g,'<span class="k" data-r="$2">$1</span>')
             .replace(/[ァ-ヺ][ァ-ヺー]*/g,'<span class="kt">$&</span>');
   }
   function plainRuby(s){return s.replace(/\{([^|}]+)\|([^}]+)\}/g,'<ruby>$1<rt>$2</rt></ruby>')}
@@ -180,7 +183,7 @@ document.documentElement.classList.add("js");
   /* ---------- Reading view ---------- */
   var docSel = store('dl') || 'all';
   var df=document.getElementById('doc-filter');
-  var dopts=[['all','Tất cả (10)'],['8','Bài 8'],['9','Bài 9'],['10','Bài 10'],['11','Bài 11'],['on','Ôn tập']];
+  var dopts=[['all','Tất cả ('+D.passages.length+')'],['8','Bài 8'],['9','Bài 9'],['10','Bài 10'],['11','Bài 11'],['on','Ôn tập']];
   df.innerHTML=dopts.map(function(o){return '<button class="chip" data-l="'+o[0]+'" aria-pressed="'+(o[0]===docSel)+'">'+o[1]+'</button>'}).join('');
   df.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;docSel=b.dataset.l;store('dl',docSel);
     df.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});renderDocs()});
@@ -451,7 +454,8 @@ document.documentElement.classList.add("js");
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="../assets/glass-ui.js?v=4"></script>
-<script src="study.js?v=4"></script>
+<script src="../assets/glass-ui.js?v=5"></script>
+<script src="../assets/characters.js?v=5"></script>
+<script src="study.js?v=5"></script>
 </body>
 </html>

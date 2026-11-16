@@ -34,6 +34,110 @@
   markSidebar();
   window.addEventListener("hashchange", markSidebar);
 
+  /* ---------- Lookup popup: reading + meaning for kanji / katakana in the passages ---------- */
+  const D = JSON.parse($("#data").textContent);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const RB = /\{([^|}]+)\|([^}]+)\}/g;
+  const kinfo = {};
+  const examples = []; // [raw "{w|r}" string, meaning]
+  D.kanji.forEach((L) => L.items.forEach((it) => {
+    kinfo[it.k] = it;
+    it.ex.forEach((x) => examples.push(x));
+  }));
+  const kataMeaning = {};
+  D.passages.forEach((p) => p.kata.forEach(([w, m]) => { kataMeaning[w] = m; }));
+
+  function lookupKanji(word, reading) {
+    const key = `{${word}|${reading}}`;
+    const exact = examples.find((x) => x[0] === key);
+    const inside = exact || examples.find((x) => x[0].includes(key));
+    const chars = Array.from(word).filter((c) => kinfo[c]).map((c) => kinfo[c]);
+    let html = `<div class="lk-w" lang="ja">${esc(word)}</div><div class="lk-r" lang="ja">${esc(reading)}</div>`;
+    if (chars.length) html += `<div class="lk-hv">${chars.map((it) => esc(it.hv.split(" / ")[0])).join(" ")}</div>`;
+    if (exact) {
+      html += `<div class="lk-m">${esc(exact[1])}</div>`;
+    } else if (inside) {
+      const form = inside[0].replace(RB, "$1");
+      html += `<div class="lk-m">${esc(inside[1])}</div><div class="lk-src">trong từ <span lang="ja">${esc(form)}</span></div>`;
+    }
+    if (chars.length) {
+      html += `<div class="lk-chars">${chars.map((it) =>
+        `<div><b lang="ja">${esc(it.k)}</b>On ${esc(it.on)} · Kun ${esc(it.kun)}</div>`).join("")}</div>`;
+    }
+    return html;
+  }
+  function lookupKata(word) {
+    const m = kataMeaning[word];
+    if (!m) return null;
+    return `<div class="lk-w" lang="ja">${esc(word)}</div><div class="lk-hv">KATAKANA</div><div class="lk-m">${esc(m)}</div>`;
+  }
+
+  const pop = document.createElement("div");
+  pop.className = "lookup";
+  pop.setAttribute("role", "tooltip");
+  pop.id = "lookup";
+  document.body.appendChild(pop);
+  let current = null;
+
+  function showLookup(el) {
+    const html = el.classList.contains("kt") ? lookupKata(el.textContent) : lookupKanji(el.textContent, el.dataset.r || "");
+    if (!html) return;
+    if (current && current !== el) current.classList.remove("lk-on");
+    current = el;
+    el.classList.add("lk-on");
+    pop.innerHTML = html;
+    // Measure, then place above the word (or below if there is no room), kept inside the viewport.
+    pop.style.visibility = "hidden";
+    pop.style.opacity = "1";
+    const r = el.getBoundingClientRect();
+    const pw = pop.offsetWidth;
+    const ph = pop.offsetHeight;
+    const left = Math.min(Math.max(12, r.left + r.width / 2 - pw / 2), window.innerWidth - pw - 12);
+    const above = r.top - ph - 10;
+    const top = above > 8 ? above : r.bottom + 10;
+    pop.style.left = `${left}px`;
+    pop.style.top = `${top}px`;
+    if (window.gsap && !reducedMotion()) {
+      gsap.fromTo(pop, { autoAlpha: 0, y: above > 8 ? 6 : -6 }, { autoAlpha: 1, y: 0, duration: 0.18, ease: "power2.out", overwrite: true });
+    } else {
+      pop.style.visibility = "visible";
+    }
+  }
+  function hideLookup() {
+    if (!current) return;
+    current.classList.remove("lk-on");
+    current = null;
+    if (window.gsap) gsap.to(pop, { autoAlpha: 0, duration: 0.12, overwrite: true });
+    else pop.style.visibility = "hidden";
+  }
+  const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const docOut = $("#doc-out");
+  const wordOf = (t) => t.closest && t.closest("#doc-out .k[data-r], #doc-out .kt");
+
+  docOut.addEventListener("mouseover", (e) => {
+    if (!finePointer.matches) return;
+    const w = wordOf(e.target);
+    if (w && w !== current) showLookup(w);
+  });
+  docOut.addEventListener("mouseout", (e) => {
+    if (!finePointer.matches) return;
+    const w = wordOf(e.target);
+    if (w && !(e.relatedTarget && w.contains(e.relatedTarget))) hideLookup();
+  });
+  // Touch / click: tap a word to toggle its popup; tap elsewhere to close.
+  document.addEventListener("click", (e) => {
+    const w = wordOf(e.target);
+    if (w) {
+      if (w === current && !finePointer.matches) hideLookup();
+      else showLookup(w);
+    } else if (!e.target.closest("#lookup")) {
+      hideLookup();
+    }
+  });
+  window.addEventListener("scroll", hideLookup, { passive: true });
+  window.addEventListener("hashchange", hideLookup);
+
   if (!hasGsap) return;
 
   /* ---------- Motion ---------- */

@@ -258,14 +258,10 @@
         .from(".player", { autoAlpha: 0, y: 24 }, "widgets+=0.4")
         .from(".study", { autoAlpha: 0, y: 40, scale: 0.95, duration: 1 }, "widgets+=0.2")
         .from(".study-links a", { autoAlpha: 0, y: 10, stagger: 0.08, duration: 0.4 }, "<0.5")
-        .from(".orb", { autoAlpha: 0, scale: 0.6, duration: 1.4, stagger: 0.2 }, "widgets")
         .addLabel("dock", "widgets+=0.3")
         .from(".dock", { autoAlpha: 0, y: 70 }, "dock")
         .from(".dock-item", { autoAlpha: 0, y: 24, duration: 0.5, ease: "back.out(2)", stagger: 0.05 }, "dock+=0.2");
 
-      /* Ambient float for the centre orbs */
-      gsap.to(".orb-a", { x: 18, y: -22, duration: 6, ease: "sine.inOut", repeat: -1, yoyo: true });
-      gsap.to(".orb-b", { x: -14, y: 16, duration: 5, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 1 });
 
       /* Spinning cover while music plays */
       spin = gsap.to("#cover", { rotation: 360, duration: 6, ease: "none", repeat: -1, paused: !playing });

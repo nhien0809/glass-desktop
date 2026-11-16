@@ -185,7 +185,7 @@ body.study-page {
   font-size: 15px;
   line-height: 1.6;
   color: var(--ink);
-  padding: 28px 24px 120px 108px;
+  padding: 28px 24px 150px 116px;
 }
 .study-page .bg { filter: blur(9px) saturate(115%); }
 
@@ -345,7 +345,7 @@ article.p, article.tc { border-radius: 24px; }
 
 /* Phones */
 @media (max-width: 760px) {
-  body.study-page { padding: 16px 12px 104px; }
+  body.study-page { padding: 16px 12px 190px; }
   .study-page .sidebar { margin-bottom: 14px; }
   .wrap { border-radius: 26px; padding: 18px 12px 24px; }
   .top-side { text-align: left; }
@@ -359,3 +359,73 @@ article.p, article.tc { border-radius: 24px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
 }
+
+/* ---------- Tidier header ---------- */
+header.top .subtitle { margin: 4px 0 0; font-weight: 600; color: var(--muted); }
+.stats { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; }
+.stats li {
+  font-size: 12.5px; font-weight: 600;
+  padding: 4px 12px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--card-border);
+}
+.stats b { color: var(--shu); }
+
+/* ---------- Collapsible "how to practise" ---------- */
+details.howto { padding: 0; margin-top: 14px; }
+details.howto summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 10px 16px;
+  font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+}
+details.howto summary::-webkit-details-marker { display: none; }
+details.howto summary::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.2s;
+}
+details.howto[open] summary::before { transform: rotate(45deg); }
+details.howto ol { margin: 0; padding: 0 18px 14px 38px; }
+
+/* ---------- Kanji / katakana lookup ---------- */
+.lookup-hint {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+#doc-out .k, #doc-out .kt {
+  cursor: help;
+  border-bottom: 1.5px dotted rgba(51, 70, 168, 0.55);
+}
+#doc-out .kt { border-bottom-color: rgba(11, 110, 96, 0.55); }
+#doc-out .k:hover, #doc-out .k.lk-on { background: rgba(51, 70, 168, 0.14); border-radius: 4px; }
+#doc-out .kt:hover, #doc-out .kt.lk-on { background: rgba(13, 117, 102, 0.16); }
+
+.lookup {
+  position: fixed;
+  z-index: 50;
+  left: 0; top: 0;
+  min-width: 150px;
+  max-width: min(280px, calc(100vw - 24px));
+  padding: 10px 14px 12px;
+  border-radius: 16px;
+  background: rgba(18, 21, 28, 0.92);
+  color: #fff;
+  box-shadow: 0 14px 34px rgba(10, 20, 40, 0.35);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  visibility: hidden;
+}
+.lookup .lk-w { font-family: var(--f-kanji); font-weight: 600; font-size: 26px; line-height: 1.2; }
+.lookup .lk-r { font-family: var(--f-jp); font-size: 15px; color: #ffd166; margin-top: 2px; }
+.lookup .lk-hv { font-size: 11.5px; font-weight: 700; letter-spacing: 0.08em; color: #ff8a9e; margin-top: 4px; }
+.lookup .lk-m { font-size: 14px; margin-top: 4px; }
+.lookup .lk-src { font-size: 11.5px; color: rgba(255, 255, 255, 0.65); margin-top: 2px; }
+.lookup .lk-src span { font-family: var(--f-jp); }
+.lookup .lk-chars { display: grid; gap: 2px; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255, 255, 255, 0.15); font-size: 12px; }
+.lookup .lk-chars b { font-family: var(--f-kanji); font-size: 15px; margin-right: 6px; }

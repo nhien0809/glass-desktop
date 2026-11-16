@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Klee+One:wght@600&family=Noto+Sans+JP:wght@400;500;700&family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -18,13 +18,12 @@
   <main class="desktop">
     <!-- Left: section navigation -->
     <nav class="sidebar glass reveal" aria-label="Mục học">
-      <a class="side-btn" href="https://mazii.net/vi-VN" target="_blank" rel="noopener" aria-label="Tra từ điển (Mazii)" data-label="Tra từ điển">
-        <svg viewBox="0 0 24 24" class="search-ico" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-      </a>
-      <a class="side-btn" href="./" aria-current="page" aria-label="Trang chủ" data-label="Trang chủ"><span class="g" lang="ja">家</span></a>
-      <a class="side-btn" href="hoc/#kanji" aria-label="Học chữ Hán" data-label="Học chữ Hán"><span class="g" lang="ja">漢</span></a>
-      <a class="side-btn" href="hoc/#doc" aria-label="Bài đọc" data-label="Bài đọc"><span class="g" lang="ja">読</span></a>
-      <a class="side-btn" href="hoc/#tranh" aria-label="Tranh kiểm tra" data-label="Tranh kiểm tra"><span class="g" lang="ja">絵</span></a>
+      <a class="side-btn" href="https://mazii.net/vi-VN" target="_blank" rel="noopener"><span class="g g-search" aria-hidden="true"><svg viewBox="0 0 24 24" class="search-ico"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><span class="cap">Tra từ</span></a>
+      <a class="side-btn" href="./" aria-current="page"><span class="g g3" lang="ja">ホーム</span><span class="cap">Trang chủ</span></a>
+      <a class="side-btn" href="hoc/#kanji" data-view="kanji"><span class="g g2" lang="ja">漢字</span><span class="cap">Chữ Hán</span></a>
+      <a class="side-btn" href="hoc/#doc" data-view="doc"><span class="g g2" lang="ja">読解</span><span class="cap">Đọc hiểu</span></a>
+      <a class="side-btn" href="hoc/#tranh" data-view="tranh"><span class="g g1" lang="ja">絵</span><span class="cap">Tranh</span></a>
+      <button class="side-btn" type="button" id="castToggle" aria-pressed="true"><span class="g g1" lang="ja">人</span><span class="cap">Nhân vật</span></button>
     </nav>
 
     <!-- Main frosted panel -->
@@ -50,8 +49,6 @@
       </div>
 
       <div class="col-center">
-        <div class="orb orb-a" aria-hidden="true"></div>
-        <div class="orb orb-b" aria-hidden="true"></div>
 
         <section class="study widget" id="study" aria-labelledby="studyTitle">
           <div class="study-head">
@@ -106,25 +103,25 @@
             <span class="shape" aria-hidden="true"></span>
             <span class="lc-num">Bài 8</span>
             <span class="lc-jp" lang="ja">大切な人</span>
-            <span class="lc-vi">Người quan trọng · 12 chữ</span>
+            <span class="lc-vi">Người quan trọng</span>
           </a>
           <a class="lesson-card widget card-2" href="hoc/?bai=9#kanji">
             <span class="shape" aria-hidden="true"></span>
             <span class="lc-num">Bài 9</span>
             <span class="lc-jp" lang="ja">好きなこと</span>
-            <span class="lc-vi">Điều mình thích · 10 chữ</span>
+            <span class="lc-vi">Điều mình thích</span>
           </a>
           <a class="lesson-card widget card-3" href="hoc/?bai=10#kanji">
             <span class="shape" aria-hidden="true"></span>
             <span class="lc-num">Bài 10</span>
             <span class="lc-jp" lang="ja">バスツアー</span>
-            <span class="lc-vi">Tour xe buýt · 9 chữ</span>
+            <span class="lc-vi">Tour xe buýt</span>
           </a>
           <a class="lesson-card widget card-4" href="hoc/?bai=11#kanji">
             <span class="shape" aria-hidden="true"></span>
             <span class="lc-num">Bài 11</span>
             <span class="lc-jp" lang="ja">私の生活</span>
-            <span class="lc-vi">Cuộc sống của tôi · 10 chữ</span>
+            <span class="lc-vi">Cuộc sống của tôi</span>
           </a>
         </nav>
 
@@ -168,7 +165,8 @@
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="assets/glass-ui.js?v=4"></script>
-  <script src="main.js?v=4"></script>
+  <script src="assets/glass-ui.js?v=5"></script>
+  <script src="assets/characters.js?v=5"></script>
+  <script src="main.js?v=5"></script>
 </body>
 </html>

@@ -11,13 +11,14 @@ Trang web: https://nhien0809.github.io/glass-desktop/
 - **今日の漢字 · Kanji hôm nay**: mỗi ngày một chữ trong 41 chữ Hán, có âm Hán Việt, On, Kun, từ ví dụ có furigana và mẹo nhớ. Nút ‹ › để xem chữ khác, "Che đáp án" để tự kiểm tra.
 - Bốn thẻ bài 8, 9, 10, 11: bấm vào để mở sổ học lọc sẵn đúng bài.
 - Trình phát nhạc (play/pause, tiến độ, đĩa xoay).
-- Thanh bên: tra từ điển, Trang chủ, Chữ Hán, Bài đọc, Tranh kiểm tra.
+- Thanh bên: mỗi nút là một từ tiếng Nhật đúng nghĩa kèm chú thích tiếng Việt: Tra từ, ホーム (Trang chủ), 漢字 (Chữ Hán), 読解 (Đọc hiểu), 絵 (Tranh), 人 (bật/tắt nhân vật).
+- Nhân vật chibi tự vẽ (Hana, Ken, Momo và chú chó Pochi) đi lại ở mép dưới màn hình; bấm vào để nghe một câu tiếng Nhật của bài 8–11 có furigana và nghĩa.
 - Dock công cụ: Mazii, Google Dịch, Jisho, NHK News Web Easy, YouTube, Spotify, có hiệu ứng phóng to khi rê chuột.
 
 ## Sổ học (`hoc/`)
 
 - **Học chữ Hán**: 41 thẻ chữ Hán, lọc theo bài, chế độ tự kiểm tra.
-- **Bài đọc**: 10 bài đọc hiểu (mỗi bài 5 chữ Hán + 5 từ katakana), bản dịch, câu hỏi và đáp án kèm ngữ pháp.
+- **Bài đọc**: 11 bài đọc hiểu (mỗi bài 5 chữ Hán + 5 từ katakana), bản dịch, câu hỏi và đáp án kèm ngữ pháp. Di chuột (hoặc chạm) vào chữ Hán / katakana trong bài để xem cách đọc, âm Hán Việt, On/Kun và nghĩa.
 - **Tranh kiểm tra**: nhìn tranh trả lời câu hỏi, có gợi ý và đáp án.
 
 ## Chuyển động (GSAP)
