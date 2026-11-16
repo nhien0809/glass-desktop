@@ -8,9 +8,9 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Klee+One:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap">
-<link rel="stylesheet" href="../style.css?v=6">
-<link rel="stylesheet" href="study.css?v=6">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../style.css?v=12">
+<link rel="stylesheet" href="study.css?v=10">
 <script>
 document.documentElement.classList.add("js");
 /* ?bai=8 from the home lesson cards: preselect that lesson in every filter, then tidy the URL. */
@@ -26,12 +26,13 @@ document.documentElement.classList.add("js");
 <div class="bg" aria-hidden="true"></div>
 
 <nav class="sidebar glass reveal" aria-label="Mục học">
-  <a class="side-btn" href="https://mazii.net/vi-VN" target="_blank" rel="noopener"><span class="g g-search" aria-hidden="true"><svg viewBox="0 0 24 24" class="search-ico"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><span class="cap">Tra từ</span></a>
-  <a class="side-btn" href="../"><span class="g g3" lang="ja">ホーム</span><span class="cap">Trang chủ</span></a>
-  <a class="side-btn" href="#kanji" data-view="kanji"><span class="g g2" lang="ja">漢字</span><span class="cap">Chữ Hán</span></a>
-  <a class="side-btn" href="#doc" data-view="doc"><span class="g g2" lang="ja">読解</span><span class="cap">Đọc hiểu</span></a>
-  <a class="side-btn" href="#tranh" data-view="tranh"><span class="g g1" lang="ja">絵</span><span class="cap">Tranh</span></a>
-  <button class="side-btn" type="button" id="castToggle" aria-pressed="true"><span class="g g1" lang="ja">人</span><span class="cap">Nhân vật</span></button>
+  <a class="side-btn" href="https://mazii.net/vi-VN" target="_blank" rel="noopener" data-label="Tra từ (Mazii)" aria-label="Tra từ trên Mazii"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></a>
+  <a class="side-btn" href="../" data-label="Trang chủ" aria-label="Trang chủ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4.5 20 11v8.5a1 1 0 0 1-1 1h-4.5V15h-5v5.5H5a1 1 0 0 1-1-1Z"/></svg></a>
+  <a class="side-btn" href="#kanji" data-view="kanji" data-label="Chữ Hán" aria-label="Học chữ Hán"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 4v16M4 12h16" stroke-dasharray="2 2.2"/></svg></a>
+  <a class="side-btn" href="#doc" data-view="doc" data-label="Bài đọc" aria-label="Bài đọc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c2.7-1 5.7-.8 9 1.2 3.3-2 6.3-2.2 9-1.2V19c-2.7-1-5.7-.8-9 1.2-3.3-2-6.3-2.2-9-1.2Z"/><path d="M12 6.7v13.5"/></svg></a>
+  <a class="side-btn" href="#tranh" data-view="tranh" data-label="Tranh" aria-label="Tranh kiểm tra"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9.5" r="1.8"/><path d="m4 18 5.5-5.2 4 3.7 2.6-2.4L21 18.5"/></svg></a>
+  <button class="side-btn" type="button" data-speak data-label="Luyện nói" aria-label="Luyện nói"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
+  <button class="side-btn" type="button" id="castToggle" aria-pressed="true" data-label="Nhân vật" aria-label="Bật/tắt nhân vật"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M5 20.5c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></button>
 </nav>
 
 <main class="wrap reveal">
@@ -100,7 +101,7 @@ document.documentElement.classList.add("js");
 
 <nav class="dock glass reveal" aria-label="Công cụ học">
   <a class="dock-item" href="https://mazii.net/vi-VN" target="_blank" rel="noopener" aria-label="Mazii – từ điển Nhật Việt" data-label="Mazii"><span class="app-tile t-mazii" lang="ja">辞</span></a>
-  <a class="dock-item" href="https://translate.google.com/?sl=ja&amp;tl=vi" target="_blank" rel="noopener" aria-label="Google Dịch Nhật – Việt" data-label="Google Dịch"><span class="app-tile t-trans" lang="ja">訳</span></a>
+  <a class="dock-item" href="https://translate.google.com/?sl=ja&amp;tl=vi" target="_blank" rel="noopener" aria-label="Google Dịch Nhật – Việt" data-label="Google Dịch"><span class="app-tile t-trans"><i class="ico i-gtranslate"></i></span></a>
   <a class="dock-item" href="https://jisho.org/" target="_blank" rel="noopener" aria-label="Jisho – từ điển Nhật Anh" data-label="Jisho"><span class="app-tile t-jisho">J</span></a>
   <a class="dock-item" href="https://www3.nhk.or.jp/news/easy/" target="_blank" rel="noopener" aria-label="NHK News Web Easy" data-label="NHK Easy"><span class="app-tile t-nhk" lang="ja">やさ</span></a>
   <a class="dock-item" href="https://www.youtube.com/results?search_query=dekiru+nihongo" target="_blank" rel="noopener" aria-label="YouTube – Dekiru Nihongo" data-label="YouTube"><i class="ico i-youtube"></i></a>
@@ -454,8 +455,9 @@ document.documentElement.classList.add("js");
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="../assets/glass-ui.js?v=6"></script>
-<script src="../assets/characters.js?v=6"></script>
-<script src="study.js?v=6"></script>
+<script src="../assets/glass-ui.js?v=10"></script>
+<script src="../assets/speak.js?v=10"></script>
+<script src="../assets/characters.js?v=10"></script>
+<script src="study.js?v=10"></script>
 </body>
 </html>

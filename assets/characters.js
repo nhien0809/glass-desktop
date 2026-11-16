@@ -1,7 +1,7 @@
 /*
  * Walking chibi characters (original designs, drawn here as SVG) that stroll along the bottom of the page.
- * Click / tap one to hear a JPD133 sentence (with furigana + Vietnamese).
- * The sidebar button #castToggle (人 · Nhân vật) shows or hides them; the choice is remembered.
+ * They say a JPD133 sentence now and then; click / tap one and it asks you a question to answer out loud
+ * (speaking practice in assets/speak.js). #castToggle in the sidebar shows or hides them; the choice is remembered.
  */
 (() => {
   "use strict";
@@ -161,7 +161,7 @@
   /* ---------------- Cast ---------------- */
   const CAST = [
     {
-      name: "Hana", kind: "human", speed: 52, step: 0.32,
+      name: "Hana", kind: "human", pitch: 1.25, speed: 52, step: 0.32,
       look: { hairStyle: "twintails", hair: "#7a4a2e", skin: "#ffe3cf", skinShade: "#f2c9ae", eye: "#3f9b6e", eyeLight: "#9be0b7", lashes: true,
         outfit: "sailor", top: "#fdfdfd", collar: "#26346b", bottom: "#26346b", sleeve: "#fdfdfd", leg: "#ffe3cf", sock: "#fdfdfd", shoe: "#5b3a2a" },
       lines: [
@@ -172,7 +172,7 @@
       ],
     },
     {
-      name: "Ken", kind: "human", speed: 60, step: 0.3,
+      name: "Ken", kind: "human", pitch: 0.75, speed: 60, step: 0.3,
       look: { hairStyle: "spiky", hair: "#23262f", skin: "#f8d9bf", skinShade: "#e8bf9f", eye: "#8a5a32", eyeLight: "#d9a066", lashes: false, ears: true,
         outfit: "hoodie", top: "#f08a3c", collar: "#c9682a", bottom: "#3b4252", sleeve: "#f08a3c", leg: "#3b4252", shoe: "#f4f4f4" },
       lines: [
@@ -183,7 +183,7 @@
       ],
     },
     {
-      name: "Momo", kind: "human", speed: 46, step: 0.34,
+      name: "Momo", kind: "human", pitch: 1.4, speed: 46, step: 0.34,
       look: { hairStyle: "bob", hair: "#f2a1c0", skin: "#ffe6d6", skinShade: "#f4cbb6", eye: "#8a5cd8", eyeLight: "#c9b0ff", lashes: true,
         outfit: "cardigan", top: "#f5cd5b", collar: "#f5cd5b", bottom: "#6a7fd6", sleeve: "#f5cd5b", leg: "#3b3f52", shoe: "#8a4b3a" },
       lines: [
@@ -194,7 +194,7 @@
       ],
     },
     {
-      name: "Pochi", kind: "dog", speed: 80, step: 0.17,
+      name: "Pochi", kind: "dog", pitch: 1.7, speed: 80, step: 0.17,
       lines: [
         ["ワン！ワン！", "Gâu! Gâu!"],
         ["ポチです。よろしく！", "Mình là Pochi. Rất vui được gặp!"],
@@ -216,7 +216,7 @@
     const el = document.createElement("button");
     el.type = "button";
     el.className = `actor actor-${c.kind}`;
-    el.setAttribute("aria-label", `${c.name}: bấm để nghe một câu tiếng Nhật`);
+    el.setAttribute("aria-label", `${c.name}: bấm để luyện nói`);
     el.innerHTML = `
       <span class="bubble" role="status"></span>
       <span class="sprite">${c.kind === "dog" ? dogSVG() : humanSVG(c.look)}</span>`;
@@ -249,7 +249,21 @@
         .fromTo(a.q(".armR"), { rotation: -16 }, { rotation: 16, transformOrigin: "50% 8%", ...loop }, 0)
         .fromTo(a.q(".body"), { y: 0 }, { y: -3, ...loop, duration: s / 2 }, 0);
     }
-    el.addEventListener("click", () => talkNow(a));
+    el.addEventListener("click", () => {
+      talkNow(a);
+      if (window.Speak) {
+        // Same drawing, framed on the face, as the avatar in the practice window.
+        const svg = a.sprite.querySelector("svg").cloneNode(true);
+        svg.setAttribute("viewBox", c.kind === "dog" ? "66 0 50 54" : "22 8 76 80");
+        // Drop the walk-cycle pose (GSAP writes it as transform attributes / inline styles).
+        svg.querySelectorAll("[transform], [style], [data-svg-origin]").forEach((n) => {
+          n.removeAttribute("transform");
+          n.removeAttribute("style");
+          n.removeAttribute("data-svg-origin");
+        });
+        Speak.open({ name: c.name, avatar: svg.outerHTML, pitch: c.pitch, male: c.name === "Ken" });
+      }
+    });
     return a;
   });
 
@@ -331,7 +345,7 @@
     if (a.move) a.move.kill();
     if (a.wait) a.wait.kill();
     stopWalking(a);
-    say(a);
+    if (!window.Speak) say(a);
     if (!reduced()) {
       gsap.fromTo(a.sprite, { y: 0 }, { y: -16, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" });
       a.wait = gsap.delayedCall(3.4, () => wander(a));

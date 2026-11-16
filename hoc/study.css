@@ -6,7 +6,7 @@
   --il-bg:#eef1f7; --il-line:#2b3146; --il-eye:#2b3146; --il-skin:#f3cba8; --il-hair:#4a3328; --il-c1:#5d7bd8; --il-c2:#e3795c; --il-c3:#49a67a;
   --il-yl:#f4c44f; --il-rd:#d9473c; --il-wd:#b98552; --il-gr:#9aa1b3; --il-dk:#3d4357; --il-sky:#bfe0f5; --il-wt:#5fa9d8; --il-road:#d8d2c4;
   --il-grass:#d7ecc9; --il-tree:#4f9a5c; --il-ok:#2f9a62; --il-ng:#d23c32; --il-pnl:#ffffff; --il-wh:#ffffff;
-  --f-kanji:"Klee One","Noto Sans JP",serif;
+  --f-kanji:"Noto Sans JP","Be Vietnam Pro",sans-serif;
   --f-jp:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
   --f-vi:"Be Vietnam Pro","Segoe UI",system-ui,sans-serif;
 }
@@ -213,7 +213,7 @@ body.study-page {
   margin: 0 auto;
   padding: 26px clamp(16px, 3vw, 36px) 36px;
   border-radius: 34px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 20px 60px rgba(20, 40, 80, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.7);
   -webkit-backdrop-filter: none;
@@ -241,12 +241,14 @@ header.top p { margin: 6px 0 0; color: var(--muted); max-width: 62ch; }
 .back-home:hover { background: #fff; }
 .top-side { text-align: right; }
 .mini-clock {
-  font-family: "Press Start 2P", monospace;
+  font-family: var(--f-vi);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
   font-size: clamp(20px, 2.6vw, 30px);
   letter-spacing: 2px;
   line-height: 1.2;
 }
-.mini-date { font-family: "Space Mono", monospace; font-size: 13px; color: var(--muted); margin-top: 4px; }
+.mini-date { font-family: var(--f-vi); font-weight: 600; font-size: 13px; color: var(--muted); margin-top: 4px; }
 .mini-date span { font-family: var(--f-jp); color: var(--shu); margin-left: 6px; }
 
 /* Sticky toolbar as a glass pill */

@@ -8,120 +8,86 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Klee+One:wght@600&family=Noto+Sans+JP:wght@400;500;700&family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=12" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
-<body>
+<body class="home">
   <div class="bg" aria-hidden="true"></div>
 
   <main class="desktop">
-    <!-- Left: section navigation -->
     <nav class="sidebar glass reveal" aria-label="Mục học">
-      <a class="side-btn" href="https://mazii.net/vi-VN" target="_blank" rel="noopener"><span class="g g-search" aria-hidden="true"><svg viewBox="0 0 24 24" class="search-ico"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></span><span class="cap">Tra từ</span></a>
-      <a class="side-btn" href="./" aria-current="page"><span class="g g3" lang="ja">ホーム</span><span class="cap">Trang chủ</span></a>
-      <a class="side-btn" href="hoc/#kanji" data-view="kanji"><span class="g g2" lang="ja">漢字</span><span class="cap">Chữ Hán</span></a>
-      <a class="side-btn" href="hoc/#doc" data-view="doc"><span class="g g2" lang="ja">読解</span><span class="cap">Đọc hiểu</span></a>
-      <a class="side-btn" href="hoc/#tranh" data-view="tranh"><span class="g g1" lang="ja">絵</span><span class="cap">Tranh</span></a>
-      <button class="side-btn" type="button" id="castToggle" aria-pressed="true"><span class="g g1" lang="ja">人</span><span class="cap">Nhân vật</span></button>
+      <a class="side-btn" href="https://mazii.net/vi-VN" target="_blank" rel="noopener" data-label="Tra từ (Mazii)" aria-label="Tra từ trên Mazii"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></a>
+      <a class="side-btn" href="./" aria-current="page" data-label="Trang chủ" aria-label="Trang chủ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4.5 20 11v8.5a1 1 0 0 1-1 1h-4.5V15h-5v5.5H5a1 1 0 0 1-1-1Z"/></svg></a>
+      <a class="side-btn" href="hoc/#kanji" data-view="kanji" data-label="Chữ Hán" aria-label="Học chữ Hán"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 4v16M4 12h16" stroke-dasharray="2 2.2"/></svg></a>
+      <a class="side-btn" href="hoc/#doc" data-view="doc" data-label="Bài đọc" aria-label="Bài đọc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c2.7-1 5.7-.8 9 1.2 3.3-2 6.3-2.2 9-1.2V19c-2.7-1-5.7-.8-9 1.2-3.3-2-6.3-2.2-9-1.2Z"/><path d="M12 6.7v13.5"/></svg></a>
+      <a class="side-btn" href="hoc/#tranh" data-view="tranh" data-label="Tranh" aria-label="Tranh kiểm tra"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9.5" r="1.8"/><path d="m4 18 5.5-5.2 4 3.7 2.6-2.4L21 18.5"/></svg></a>
+      <button class="side-btn" type="button" data-speak data-label="Luyện nói" aria-label="Luyện nói"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
+      <button class="side-btn" type="button" id="castToggle" aria-pressed="true" data-label="Nhân vật" aria-label="Bật/tắt nhân vật"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M5 20.5c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></button>
     </nav>
 
     <!-- Main frosted panel -->
     <section class="panel glass reveal" aria-label="Bảng học">
+      <h1 class="sr-only">Nihongo Desk · học tiếng Nhật JPD133</h1>
       <div class="col-left">
         <div class="clock-wrap widget">
           <div class="clock" id="clock" aria-label="Giờ hiện tại">
             <span class="digit"><span>0</span></span><span class="digit"><span>0</span></span><span class="colon">:</span><span class="digit"><span>0</span></span><span class="digit"><span>0</span></span>
           </div>
           <div class="date" id="date">Monday 01/01</div>
-          <div class="date-jp" id="dateJp" lang="ja">1月1日（月）</div>
         </div>
 
-        <div class="calendar widget" id="calendar" aria-label="Lịch">
-          <h2 class="cal-month" id="calMonth">Month</h2>
-          <div class="cal-rule"></div>
-          <div class="cal-grid cal-head" aria-hidden="true" lang="ja">
-            <span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span>
+        <!-- Kanji of the day: big glyph, Hán Việt, reading, one example -->
+        <section class="kcard widget" id="kcard" aria-labelledby="kTitle">
+          <header class="kc-head">
+            <h2 id="kTitle" lang="ja">今日の漢字</h2>
+            <span class="kc-lesson" id="kLesson">Bài 8</span>
+          </header>
+          <div class="kc-rule" aria-hidden="true"></div>
+          <div class="kc-body" id="kBody">
+            <div class="kc-char" id="kChar" lang="ja">家</div>
+            <div class="kc-hv quizable" id="kHv">—</div>
+            <div class="kc-read quizable" lang="ja"><span id="kOn">—</span><i aria-hidden="true">·</i><span id="kKun">—</span></div>
+            <div class="kc-ex quizable" id="kEx"></div>
           </div>
-          <div class="cal-grid cal-days" id="calDays"></div>
-          <div class="cal-handle"></div>
-        </div>
-      </div>
-
-      <div class="col-center">
-
-        <section class="study widget" id="study" aria-labelledby="studyTitle">
-          <div class="study-head">
-            <h2 class="study-tag" id="studyTitle"><span lang="ja">今日の漢字</span> · Kanji hôm nay</h2>
-            <span class="study-lesson" id="kLesson">Bài 8</span>
+          <div class="kc-ctl">
+            <button type="button" class="kc-btn" id="kPrev" aria-label="Chữ trước">‹</button>
+            <span class="kc-count" id="kCount">1 / 41</span>
+            <button type="button" class="kc-btn" id="kNext" aria-label="Chữ tiếp theo">›</button>
+            <button type="button" class="kc-btn kc-eye" id="kQuiz" aria-pressed="false" aria-label="Che đáp án để tự kiểm tra" title="Che đáp án">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 20 20 4"/></svg>
+            </button>
           </div>
-
-          <div class="study-body" id="kBody">
-            <div class="study-main">
-              <div class="kanji-big" id="kChar" lang="ja">家</div>
-              <div class="kanji-info quizable">
-                <div class="kanji-hv" id="kHv">—</div>
-                <dl class="kanji-read">
-                  <dt>On</dt><dd id="kOn" lang="ja">—</dd>
-                  <dt>Kun</dt><dd id="kKun" lang="ja">—</dd>
-                </dl>
-              </div>
-            </div>
-            <ul class="kanji-ex quizable" id="kEx"></ul>
-            <p class="kanji-tip quizable" id="kTip"></p>
-          </div>
-
-          <div class="study-ctl">
-            <button type="button" class="s-btn" id="kPrev" aria-label="Chữ trước">‹</button>
-            <span class="k-count" id="kCount">1 / 41</span>
-            <button type="button" class="s-btn" id="kNext" aria-label="Chữ tiếp theo">›</button>
-            <button type="button" class="s-chip" id="kQuiz" aria-pressed="false">Che đáp án</button>
-          </div>
-          <p class="quiz-hint" id="kHint" hidden>Tự nói âm Hán Việt, On, Kun rồi bấm vào phần bị che để xem.</p>
-
-          <nav class="study-links" aria-label="Sổ học">
-            <a href="hoc/#kanji">Học chữ Hán</a>
-            <a href="hoc/#doc">Bài đọc</a>
-            <a href="hoc/#tranh">Tranh kiểm tra</a>
-          </nav>
+          <div class="kc-handle" aria-hidden="true"></div>
         </section>
       </div>
 
-      <div class="col-right">
-        <div class="top-row widget">
-          <span class="flag-btn" title="日本語" aria-hidden="true"><span></span></span>
-          <div class="user-pill">
-            <span>Expyy</span>
-            <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 3 6 14h5l-1 7 7-11h-5l1-7Z" fill="#fff"/></svg></span>
-          </div>
-        </div>
+      <div class="col-center">
+        <button type="button" class="hero widget" id="hero" data-speak="hero" aria-label="Luyện nói: bấm để được hỏi một câu tiếng Nhật">
+          <img src="assets/hero.webp?v=10" alt="" width="900" height="1164" decoding="async" />
+        </button>
+        <p class="hero-tag widget" lang="ja" aria-hidden="true">日本語で話そう</p>
+        <button type="button" class="talk-chip widget" data-speak="hero">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>
+          <span>Luyện nói</span>
+        </button>
+      </div>
 
-        <h1 class="greet widget"><span lang="ja">こんにちは</span>, Expyy!!</h1>
+      <div class="col-right">
 
         <nav class="gallery" aria-label="Các bài học">
           <a class="lesson-card widget card-1" href="hoc/?bai=8#kanji">
-            <span class="shape" aria-hidden="true"></span>
-            <span class="lc-num">Bài 8</span>
-            <span class="lc-jp" lang="ja">大切な人</span>
-            <span class="lc-vi">Người quan trọng</span>
+            <span class="lc-name">Bài 8</span>
           </a>
           <a class="lesson-card widget card-2" href="hoc/?bai=9#kanji">
-            <span class="shape" aria-hidden="true"></span>
-            <span class="lc-num">Bài 9</span>
-            <span class="lc-jp" lang="ja">好きなこと</span>
-            <span class="lc-vi">Điều mình thích</span>
+            <span class="lc-name">Bài 9</span>
           </a>
           <a class="lesson-card widget card-3" href="hoc/?bai=10#kanji">
-            <span class="shape" aria-hidden="true"></span>
-            <span class="lc-num">Bài 10</span>
-            <span class="lc-jp" lang="ja">バスツアー</span>
-            <span class="lc-vi">Tour xe buýt</span>
+            <span class="lc-name">Bài 10</span>
           </a>
           <a class="lesson-card widget card-4" href="hoc/?bai=11#kanji">
-            <span class="shape" aria-hidden="true"></span>
-            <span class="lc-num">Bài 11</span>
-            <span class="lc-jp" lang="ja">私の生活</span>
-            <span class="lc-vi">Cuộc sống của tôi</span>
+            <span class="lc-name">Bài 11</span>
           </a>
         </nav>
 
@@ -153,10 +119,9 @@
       </div>
     </section>
 
-    <!-- Bottom dock: learning tools -->
     <nav class="dock glass reveal" aria-label="Công cụ học">
       <a class="dock-item" href="https://mazii.net/vi-VN" target="_blank" rel="noopener" aria-label="Mazii – từ điển Nhật Việt" data-label="Mazii"><span class="app-tile t-mazii" lang="ja">辞</span></a>
-      <a class="dock-item" href="https://translate.google.com/?sl=ja&tl=vi" target="_blank" rel="noopener" aria-label="Google Dịch Nhật – Việt" data-label="Google Dịch"><span class="app-tile t-trans" lang="ja">訳</span></a>
+      <a class="dock-item" href="https://translate.google.com/?sl=ja&amp;tl=vi" target="_blank" rel="noopener" aria-label="Google Dịch Nhật – Việt" data-label="Google Dịch"><span class="app-tile t-trans"><i class="ico i-gtranslate"></i></span></a>
       <a class="dock-item" href="https://jisho.org/" target="_blank" rel="noopener" aria-label="Jisho – từ điển Nhật Anh" data-label="Jisho"><span class="app-tile t-jisho">J</span></a>
       <a class="dock-item" href="https://www3.nhk.or.jp/news/easy/" target="_blank" rel="noopener" aria-label="NHK News Web Easy" data-label="NHK Easy"><span class="app-tile t-nhk" lang="ja">やさ</span></a>
       <a class="dock-item" href="https://www.youtube.com/results?search_query=dekiru+nihongo" target="_blank" rel="noopener" aria-label="YouTube – Dekiru Nihongo" data-label="YouTube"><i class="ico i-youtube"></i></a>
@@ -165,8 +130,9 @@
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="assets/glass-ui.js?v=6"></script>
-  <script src="assets/characters.js?v=6"></script>
-  <script src="main.js?v=6"></script>
+  <script src="assets/glass-ui.js?v=10"></script>
+  <script src="assets/speak.js?v=10"></script>
+  <script src="assets/characters.js?v=10"></script>
+  <script src="main.js?v=10"></script>
 </body>
 </html>

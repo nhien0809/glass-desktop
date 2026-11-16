@@ -12,8 +12,6 @@
 
   /* ---------------- Clock ---------------- */
   const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December"];
   const pad = (n) => String(n).padStart(2, "0");
 
   const digitSlots = $$("#clock .digit");
@@ -58,37 +56,7 @@
     if (dayKey !== lastDay) {
       lastDay = dayKey;
       dateEl.textContent = `${WEEKDAYS[now.getDay()]} ${pad(now.getMonth() + 1)}/${pad(now.getDate())}`;
-      $("#dateJp").textContent = `${now.getMonth() + 1}月${now.getDate()}日（${"日月火水木金土"[now.getDay()]}）`;
-      renderCalendar(now);
     }
-  }
-
-  /* ---------------- Calendar ---------------- */
-  function renderCalendar(now) {
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const firstWeekday = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-    $("#calMonth").innerHTML = `${MONTHS[month]} <span lang="ja">${month + 1}月</span>`;
-    const frag = document.createDocumentFragment();
-    for (let i = 0; i < firstWeekday; i++) {
-      const blank = document.createElement("span");
-      blank.className = "muted";
-      blank.setAttribute("aria-hidden", "true");
-      frag.appendChild(blank);
-    }
-    for (let d = 1; d <= daysInMonth; d++) {
-      const cell = document.createElement("span");
-      cell.textContent = d;
-      if (d === now.getDate()) {
-        cell.className = "today";
-        cell.setAttribute("aria-current", "date");
-      }
-      frag.appendChild(cell);
-    }
-    const days = $("#calDays");
-    days.replaceChildren(frag);
   }
 
   tick(false);
@@ -153,8 +121,8 @@
     });
   });
 
-  /* ---------------- Japanese study card (Kanji hôm nay) ---------------- */
-  const study = $("#study");
+  /* ---------------- Kanji of the day (dark card) ---------------- */
+  const card = $("#kcard");
   const kBody = $("#kBody");
   const quizBtn = $("#kQuiz");
   let kanji = [];
@@ -168,17 +136,16 @@
 
   function fillKanji(i) {
     const it = kanji[i];
+    const ex = it.ex[0];
     $("#kChar").textContent = it.k;
+    $("#kChar").title = it.tip || "";
     $("#kHv").textContent = it.hv;
     $("#kOn").textContent = it.on;
-    $("#kKun").textContent = it.kun;
-    $("#kTip").textContent = it.tip || "";
+    $("#kKun").textContent = it.kun.split("、")[0];
     $("#kLesson").textContent = `Bài ${it.l}`;
     $("#kCount").textContent = `${i + 1} / ${kanji.length}`;
-    $("#kEx").innerHTML = it.ex.map(([w, m, note]) =>
-      `<li><span class="w" lang="ja">${toRuby(w)}</span><span class="m">${escapeHtml(m)}${note ? `<span class="note">${escapeHtml(note)}</span>` : ""}</span></li>`
-    ).join("");
-    $$(".quizable", study).forEach((el) => el.classList.remove("shown"));
+    $("#kEx").innerHTML = `<span lang="ja">${toRuby(ex[0])}</span><small>${escapeHtml(ex[1])}</small>`;
+    $$(".quizable", card).forEach((el) => el.classList.remove("shown"));
   }
 
   function showKanji(i, dir) {
@@ -187,11 +154,11 @@
       fillKanji(kIndex);
       return;
     }
-    // Slide the old card out, swap content, slide the new one in.
+    // Slide the old glyph out, swap, slide the new one in.
     const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-    tl.to(kBody, { x: -24 * dir, autoAlpha: 0, duration: 0.18, ease: "power2.in", overwrite: "auto" })
+    tl.to(kBody, { x: -20 * dir, autoAlpha: 0, duration: 0.16, ease: "power2.in", overwrite: "auto" })
       .call(() => fillKanji(kIndex))
-      .fromTo(kBody, { x: 24 * dir }, { x: 0, autoAlpha: 1, duration: 0.35 })
+      .fromTo(kBody, { x: 20 * dir }, { x: 0, autoAlpha: 1, duration: 0.32 })
       .fromTo("#kChar", { scale: 0.7, rotation: -8 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2.2)" }, "<");
   }
 
@@ -200,12 +167,12 @@
   quizBtn.addEventListener("click", () => {
     const on = quizBtn.getAttribute("aria-pressed") !== "true";
     quizBtn.setAttribute("aria-pressed", String(on));
-    study.classList.toggle("quiz", on);
-    $("#kHint").hidden = !on;
-    $$(".quizable", study).forEach((el) => el.classList.remove("shown"));
+    quizBtn.title = on ? "Hiện đáp án" : "Che đáp án";
+    card.classList.toggle("quiz", on);
+    $$(".quizable", card).forEach((el) => el.classList.remove("shown"));
   });
-  study.addEventListener("click", (e) => {
-    if (!study.classList.contains("quiz")) return;
+  card.addEventListener("click", (e) => {
+    if (!card.classList.contains("quiz")) return;
     const part = e.target.closest(".quizable");
     if (part) part.classList.add("shown");
   });
@@ -220,7 +187,7 @@
       showKanji(dayNumber % kanji.length, 0);
     })
     .catch(() => {
-      $("#kTip").textContent = "Không tải được danh sách chữ Hán.";
+      $("#kHv").textContent = "Không tải được chữ Hán";
     });
 
   if (!hasGsap) return;
@@ -252,12 +219,12 @@
         .from(".side-btn", { autoAlpha: 0, scale: 0.4, duration: 0.5, ease: "back.out(2)", stagger: 0.06 }, "<0.15")
         .addLabel("widgets", "panel+=0.5")
         .from(".clock-wrap", { autoAlpha: 0, y: 30 }, "widgets")
-        .from(".calendar", { autoAlpha: 0, y: 40, rotationX: -15, transformOrigin: "50% 0%" }, "widgets+=0.12")
-        .from(".top-row, .greet", { autoAlpha: 0, y: -20, stagger: 0.1 }, "widgets")
+        .from(".kcard", { autoAlpha: 0, y: 40, rotationX: -15, transformOrigin: "50% 0%" }, "widgets+=0.12")
+        .from(".hero", { autoAlpha: 0, y: 60, duration: 1.1 }, "panel+=0.3")
+        .from(".hero-tag", { autoAlpha: 0, y: -20 }, "widgets+=0.4")
+        .from(".talk-chip", { autoAlpha: 0, y: 16, scale: 0.8, ease: "back.out(2)" }, "widgets+=0.6")
         .from(".lesson-card", { autoAlpha: 0, y: 30, scale: 0.9, stagger: 0.08 }, "widgets+=0.15")
         .from(".player", { autoAlpha: 0, y: 24 }, "widgets+=0.4")
-        .from(".study", { autoAlpha: 0, y: 40, scale: 0.95, duration: 1 }, "widgets+=0.2")
-        .from(".study-links a", { autoAlpha: 0, y: 10, stagger: 0.08, duration: 0.4 }, "<0.5")
         .addLabel("dock", "widgets+=0.3")
         .from(".dock", { autoAlpha: 0, y: 70 }, "dock")
         .from(".dock-item", { autoAlpha: 0, y: 24, duration: 0.5, ease: "back.out(2)", stagger: 0.05 }, "dock+=0.2");
@@ -266,13 +233,18 @@
       /* Spinning cover while music plays */
       spin = gsap.to("#cover", { rotation: 360, duration: 6, ease: "none", repeat: -1, paused: !playing });
 
-      const cleanups = [() => { spin = null; }];
+      // The hero breathes a little; the mic on the "Luyện nói" chip wiggles now and then.
+      const idle = gsap.to(".hero img", { y: -6, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      const nudge = gsap.timeline({ repeat: -1, repeatDelay: 6, delay: 3 })
+        .to(".talk-chip svg", { rotation: 14, duration: 0.12, yoyo: true, repeat: 5, ease: "sine.inOut", transformOrigin: "50% 80%" });
+
+      const cleanups = [() => { spin = null; }, () => { idle.kill(); nudge.kill(); }];
 
       if (hover) {
         const panel = $(".panel");
         cleanups.push(
           GlassUI.hoverLift(panel, ".lesson-card", { y: -8, scale: 1.04 }),
-          GlassUI.hoverLift(panel, ".calendar, .player, .study", { y: -4 })
+          GlassUI.hoverLift(panel, ".kcard, .player", { y: -4 })
         );
 
         /* Dock magnify (macOS-style) */
