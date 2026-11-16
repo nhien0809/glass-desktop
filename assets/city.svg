@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3f86d8"/>
+      <stop offset="0.45" stop-color="#7fb4ea"/>
+      <stop offset="0.75" stop-color="#c9e2f7"/>
+      <stop offset="1" stop-color="#e6f1fb"/>
+    </linearGradient>
+    <linearGradient id="glassA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9cc3e6"/>
+      <stop offset="1" stop-color="#4f7fae"/>
+    </linearGradient>
+    <linearGradient id="glassB" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5d86ad"/>
+      <stop offset="0.5" stop-color="#8db3d6"/>
+      <stop offset="1" stop-color="#4c6f93"/>
+    </linearGradient>
+    <linearGradient id="pink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2a3b8"/>
+      <stop offset="1" stop-color="#c46f88"/>
+    </linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9aa3ad"/>
+      <stop offset="1" stop-color="#5f6872"/>
+    </linearGradient>
+    <pattern id="win" width="22" height="26" patternUnits="userSpaceOnUse">
+      <rect width="22" height="26" fill="none"/>
+      <rect x="3" y="4" width="14" height="16" rx="1" fill="#e9f4ff" opacity="0.35"/>
+    </pattern>
+    <pattern id="stripes" width="1600" height="14" patternUnits="userSpaceOnUse">
+      <rect y="0" width="1600" height="3" fill="#ffffff" opacity="0.25"/>
+    </pattern>
+    <filter id="soft" x="-20%" y="-50%" width="140%" height="200%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky)"/>
+
+  <!-- clouds -->
+  <g fill="#ffffff" filter="url(#soft)" opacity="0.9">
+    <ellipse cx="260" cy="130" rx="180" ry="46"/>
+    <ellipse cx="360" cy="110" rx="120" ry="40"/>
+    <ellipse cx="820" cy="90" rx="220" ry="40"/>
+    <ellipse cx="1180" cy="170" rx="200" ry="50"/>
+    <ellipse cx="1300" cy="140" rx="120" ry="38"/>
+    <ellipse cx="600" cy="230" rx="160" ry="34"/>
+    <ellipse cx="1480" cy="60" rx="140" ry="30"/>
+  </g>
+
+  <!-- far skyline -->
+  <g fill="#a9c4de" opacity="0.85">
+    <rect x="420" y="330" width="90" height="320"/>
+    <rect x="520" y="370" width="70" height="280"/>
+    <rect x="610" y="300" width="110" height="350"/>
+    <rect x="740" y="360" width="80" height="290"/>
+    <rect x="840" y="320" width="100" height="330"/>
+    <rect x="960" y="380" width="90" height="270"/>
+    <rect x="1070" y="340" width="70" height="310"/>
+  </g>
+  <g fill="url(#win)" opacity="0.7">
+    <rect x="610" y="300" width="110" height="350"/>
+    <rect x="840" y="320" width="100" height="330"/>
+  </g>
+
+  <!-- left towers -->
+  <rect x="-20" y="40" width="210" height="700" fill="url(#glassA)"/>
+  <rect x="-20" y="40" width="210" height="700" fill="url(#win)"/>
+  <rect x="150" y="150" width="190" height="600" fill="url(#pink)"/>
+  <rect x="150" y="150" width="190" height="600" fill="url(#stripes)"/>
+  <rect x="165" y="210" width="160" height="90" rx="6" fill="#ffd6e2" opacity="0.6"/>
+  <rect x="330" y="260" width="110" height="480" fill="#7d93a8"/>
+  <rect x="330" y="260" width="110" height="480" fill="url(#win)"/>
+
+  <!-- right towers -->
+  <rect x="1180" y="0" width="160" height="760" fill="url(#glassB)"/>
+  <rect x="1180" y="0" width="160" height="760" fill="url(#win)"/>
+  <rect x="1330" y="90" width="300" height="680" fill="#6f8eae"/>
+  <rect x="1330" y="90" width="300" height="680" fill="url(#win)"/>
+  <rect x="1120" y="250" width="80" height="500" fill="#97b2cb"/>
+  <rect x="1470" y="300" width="80" height="40" fill="#3d6ea8"/>
+
+  <!-- mid street buildings -->
+  <rect x="440" y="520" width="720" height="180" fill="#c8d3dc"/>
+  <rect x="440" y="520" width="720" height="180" fill="url(#win)" opacity="0.6"/>
+  <rect x="440" y="540" width="720" height="18" fill="#5c9a6c" opacity="0.7"/>
+
+  <!-- trees -->
+  <g fill="#3f7a4a">
+    <circle cx="40" cy="760" r="70"/>
+    <circle cx="120" cy="740" r="60"/>
+    <circle cx="210" cy="770" r="55"/>
+    <circle cx="300" cy="750" r="65"/>
+    <circle cx="1300" cy="760" r="60"/>
+    <circle cx="1390" cy="740" r="70"/>
+    <circle cx="1480" cy="765" r="60"/>
+    <circle cx="1570" cy="745" r="70"/>
+  </g>
+  <g fill="#5d9a5f">
+    <circle cx="90" cy="720" r="40"/>
+    <circle cx="260" cy="725" r="38"/>
+    <circle cx="1350" cy="720" r="40"/>
+    <circle cx="1530" cy="715" r="42"/>
+    <circle cx="700" cy="690" r="30"/>
+    <circle cx="760" cy="695" r="26"/>
+    <circle cx="900" cy="690" r="30"/>
+  </g>
+
+  <!-- street -->
+  <rect x="0" y="790" width="1600" height="110" fill="url(#road)"/>
+  <g fill="#ffffff" opacity="0.7">
+    <rect x="520" y="830" width="40" height="70"/>
+    <rect x="590" y="830" width="40" height="70"/>
+    <rect x="660" y="830" width="40" height="70"/>
+    <rect x="730" y="830" width="40" height="70"/>
+    <rect x="800" y="830" width="40" height="70"/>
+    <rect x="870" y="830" width="40" height="70"/>
+    <rect x="940" y="830" width="40" height="70"/>
+    <rect x="1010" y="830" width="40" height="70"/>
+  </g>
+  <rect x="0" y="780" width="1600" height="12" fill="#b9c2c9"/>
+</svg>

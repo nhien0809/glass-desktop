@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Glass Desktop</title>
+  <meta name="description" content="A glassmorphism desktop dashboard animated with GSAP." />
+  <link rel="icon" href="assets/icons/figma.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <main class="desktop">
+    <!-- Left social sidebar -->
+    <nav class="sidebar glass reveal" aria-label="Social links">
+      <button class="side-btn" type="button" aria-label="Search" id="searchBtn">
+        <svg viewBox="0 0 24 24" class="search-ico" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+      </button>
+      <a class="side-btn" href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="TikTok"><i class="ico" style="--i:url(assets/icons/tiktok.svg)"></i></a>
+      <a class="side-btn" href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="YouTube"><i class="ico" style="--i:url(assets/icons/youtube.svg)"></i></a>
+      <a class="side-btn" href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="Facebook"><i class="ico" style="--i:url(assets/icons/facebook.svg)"></i></a>
+      <a class="side-btn" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><i class="ico" style="--i:url(assets/icons/instagram.svg)"></i></a>
+      <a class="side-btn" href="https://x.com/" target="_blank" rel="noopener" aria-label="X"><i class="ico" style="--i:url(assets/icons/x.svg)"></i></a>
+    </nav>
+
+    <!-- Main frosted panel -->
+    <section class="panel glass reveal" aria-label="Dashboard">
+      <div class="col-left">
+        <div class="clock-wrap widget">
+          <div class="clock" id="clock" aria-live="off" aria-label="Current time">
+            <span class="digit"><span>0</span></span><span class="digit"><span>0</span></span><span class="colon">:</span><span class="digit"><span>0</span></span><span class="digit"><span>0</span></span>
+          </div>
+          <div class="date" id="date">Monday 01/01</div>
+        </div>
+
+        <div class="calendar widget" id="calendar" aria-label="Calendar">
+          <h2 class="cal-month" id="calMonth">Month</h2>
+          <div class="cal-rule"></div>
+          <div class="cal-grid cal-head" aria-hidden="true">
+            <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+          </div>
+          <div class="cal-grid cal-days" id="calDays"></div>
+          <div class="cal-handle"></div>
+        </div>
+      </div>
+
+      <div class="col-center" aria-hidden="true">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+      </div>
+
+      <div class="col-right">
+        <div class="top-row widget">
+          <span class="figma-btn" title="Figma"><i class="ico ico-figma" style="--i:url(assets/icons/figma.svg)"></i></span>
+          <div class="user-pill">
+            <span>Expyy</span>
+            <span class="avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 3 6 14h5l-1 7 7-11h-5l1-7Z" fill="#fff"/></svg></span>
+          </div>
+        </div>
+
+        <h1 class="greet widget">Hi Expyy!!</h1>
+
+        <div class="gallery">
+          <figure class="card widget card-1"><span class="shape"></span><figcaption>Dawn</figcaption></figure>
+          <figure class="card widget card-2"><span class="shape"></span><figcaption>Mint</figcaption></figure>
+          <figure class="card widget card-3"><span class="shape"></span><figcaption>Dusk</figcaption></figure>
+          <figure class="card widget card-4"><span class="shape"></span><figcaption>Bloom</figcaption></figure>
+        </div>
+
+        <div class="player widget" aria-label="Music player">
+          <div class="cover" id="cover" aria-hidden="true"><span></span></div>
+          <div class="player-body">
+            <div class="track">Untitled</div>
+            <div class="progress" role="progressbar" aria-label="Track progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressFill"></span></div>
+            <div class="controls">
+              <button type="button" class="ctl" id="shuffleBtn" aria-label="Shuffle" aria-pressed="false">
+                <svg viewBox="0 0 24 24"><path d="M3 7h3.5c2 0 3.2 1 4.3 2.6l2.4 3.8C14.3 15 15.5 17 17.5 17H21M3 17h3.5c1.3 0 2.2-.5 3-1.3M14.5 8.3c.8-.8 1.7-1.3 3-1.3H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button type="button" class="ctl" id="prevBtn" aria-label="Previous">
+                <svg viewBox="0 0 24 24"><path d="M6 5v14M19 5 9 12l10 7V5Z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              </button>
+              <button type="button" class="ctl ctl-play" id="playBtn" aria-label="Play" aria-pressed="false">
+                <svg viewBox="0 0 24 24" class="i-play"><path d="M7 4.5v15l12-7.5-12-7.5Z" fill="currentColor"/></svg>
+                <svg viewBox="0 0 24 24" class="i-pause"><path d="M7 4h3.5v16H7zM13.5 4H17v16h-3.5z" fill="currentColor"/></svg>
+              </button>
+              <button type="button" class="ctl" id="nextBtn" aria-label="Next">
+                <svg viewBox="0 0 24 24"><path d="M18 5v14M5 5l10 7-10 7V5Z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              </button>
+              <button type="button" class="ctl" id="likeBtn" aria-label="Like" aria-pressed="false">
+                <svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z" fill="currentColor"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom dock -->
+    <nav class="dock glass reveal" aria-label="App dock">
+      <a class="dock-item" href="https://www.microsoft.com/windows" target="_blank" rel="noopener" aria-label="Windows"><i class="ico" style="--i:url(assets/icons/windows.svg);--c:#3fa4ff"></i></a>
+      <a class="dock-item" href="https://open.spotify.com/" target="_blank" rel="noopener" aria-label="Spotify"><i class="ico" style="--i:url(assets/icons/spotify.svg);--c:#1ed760"></i></a>
+      <a class="dock-item" href="https://www.adobe.com/products/photoshop.html" target="_blank" rel="noopener" aria-label="Photoshop"><span class="app-tile ps">Ps</span></a>
+      <a class="dock-item" href="https://www.google.com/chrome/" target="_blank" rel="noopener" aria-label="Chrome"><span class="chrome" aria-hidden="true"><span></span></span></a>
+      <a class="dock-item" href="https://www.adobe.com/products/aftereffects.html" target="_blank" rel="noopener" aria-label="After Effects"><span class="app-tile ae">Ae</span></a>
+      <a class="dock-item" href="https://discord.com/" target="_blank" rel="noopener" aria-label="Discord"><i class="ico" style="--i:url(assets/icons/discord.svg);--c:#7983f5"></i></a>
+    </nav>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
