@@ -17,7 +17,7 @@
    */
   const QUESTIONS = [
     { l: 8, q: "ご{家族|かぞく}は {何人|なんにん}ですか。", vi: "Gia đình bạn có mấy người?",
-      hint: "～{人|にん}です。", kw: [["人", "にん"]],
+      hint: "～{人|にん}です。", kw: [["人", "にん", "任", "忍"]],
       a: "{四人|よにん}です。{父|ちち}と {母|はは}と {兄|あに}と わたしです。" },
     { l: 8, q: "お{母|かあ}さんは どんな {人|ひと}ですか。", vi: "Mẹ bạn là người như thế nào?",
       hint: "{母|はは}は ～くて、～{人|ひと}です。",
@@ -29,46 +29,46 @@
       a: "わたしの {大切|たいせつ}な {人|ひと}は {祖母|そぼ}です。" },
     { l: 8, q: "お{父|とう}さんは せが {高|たか}いですか。", vi: "Bố bạn có cao không?",
       hint: "はい、{高|たか}いです。/ いいえ、{高|たか}くないです。",
-      kw: [["高い", "たかい", "高く", "たかく", "低い", "ひくい"]],
+      kw: [["高い", "たかい", "高く", "たかく", "低い", "ひくい", "低く", "ひくく", "他界"]],
       a: "いいえ、あまり {高|たか}くないです。" },
     { l: 9, q: "{趣味|しゅみ}は {何|なん}ですか。", vi: "Sở thích của bạn là gì?",
-      hint: "{趣味|しゅみ}は ～ことです。", kw: [["こと", "事"]],
+      hint: "{趣味|しゅみ}は ～ことです。", kw: [["こと", "事", "琴", "コト"]],
       a: "{趣味|しゅみ}は {音楽|おんがく}を {聞|き}く ことです。" },
     { l: 9, q: "どんな {音楽|おんがく}が {好|す}きですか。", vi: "Bạn thích loại nhạc nào?",
-      hint: "～が {好|す}きです。", kw: [["好き", "すき"]],
+      hint: "～が {好|す}きです。", kw: [["好き", "すき", "スキ", "隙", "数寄"]],
       a: "J-POPが {好|す}きです。" },
     { l: 9, q: "{休|やす}みの {日|ひ}は {何|なに}を しますか。", vi: "Ngày nghỉ bạn làm gì?",
       hint: "～を します / ～ます。", kw: [["ます"]],
       a: "{友|とも}だちと {映画|えいが}を {見|み}ます。" },
     { l: 9, q: "スポーツが {好|す}きですか。", vi: "Bạn có thích thể thao không?",
       hint: "はい、{好|す}きです。/ いいえ、あまり…",
-      kw: [["好き", "すき", "嫌い", "きらい"]],
+      kw: [["好き", "すき", "スキ", "隙", "数寄", "嫌い", "きらい"]],
       a: "はい、サッカーが {大好|だいす}きです。" },
     { l: 10, q: "どこへ {旅行|りょこう}に {行|い}きたいですか。", vi: "Bạn muốn đi du lịch ở đâu?",
-      hint: "～へ {行|い}きたいです。", kw: [["行きたい", "いきたい"]],
+      hint: "～へ {行|い}きたいです。", kw: [["行きたい", "いきたい", "生きたい", "逝きたい", "イキタイ"]],
       a: "{北海道|ほっかいどう}へ {行|い}きたいです。" },
     { l: 10, q: "バスツアーに {行|い}ったことが ありますか。", vi: "Bạn đã từng đi tour xe buýt chưa?",
       hint: "～たことが あります / ありません。",
-      kw: [["あります", "ありません", "ある", "ない"]],
+      kw: [["あります", "ありません", "ある", "ない", "有ります", "在ります"]],
       a: "はい、{一度|いちど} {行|い}ったことが あります。" },
     { l: 10, q: "{旅行|りょこう}で {何|なに}を {食|た}べたいですか。", vi: "Đi du lịch bạn muốn ăn gì?",
-      hint: "～を {食|た}べたいです。", kw: [["食べたい", "たべたい"]],
+      hint: "～を {食|た}べたいです。", kw: [["食べたい", "たべたい", "食べ隊"]],
       a: "おすしを {食|た}べたいです。" },
     { l: 10, q: "{夏休|なつやす}みに どこへ {行|い}きましたか。", vi: "Kỳ nghỉ hè bạn đã đi đâu?",
-      hint: "～へ {行|い}きました。", kw: [["行きました", "いきました", "行った", "いった"]],
+      hint: "～へ {行|い}きました。", kw: [["行きました", "いきました", "行った", "いった", "生きました", "言った", "逝きました"]],
       a: "{家族|かぞく}と {海|うみ}へ {行|い}きました。" },
     { l: 11, q: "{毎朝|まいあさ} {何時|なんじ}に {起|お}きますか。", vi: "Mỗi sáng bạn dậy lúc mấy giờ?",
-      hint: "～{時|じ}に {起|お}きます。", kw: [["時", "じ"], ["起き", "おき"]],
+      hint: "～{時|じ}に {起|お}きます。", kw: [["時", "じ", "字", "寺", "次"], ["起き", "おき", "置き", "沖", "隠岐"]],
       a: "6{時|じ}に {起|お}きます。" },
     { l: 11, q: "{朝|あさ}ごはんを {食|た}べますか。", vi: "Bạn có ăn sáng không?",
-      hint: "はい、{食|た}べます。/ いいえ、{食|た}べません。", kw: [["食べ", "たべ"]],
+      hint: "はい、{食|た}べます。/ いいえ、{食|た}べません。", kw: [["食べ", "たべ", "食"]],
       a: "はい、パンを {食|た}べます。" },
     { l: 11, q: "{寝|ね}る {前|まえ}に {何|なに}を しますか。", vi: "Trước khi ngủ bạn làm gì?",
       hint: "{寝|ね}る {前|まえ}に ～ます。", kw: [["ます"]],
       a: "{寝|ね}る {前|まえ}に {本|ほん}を {読|よ}みます。" },
     { l: 11, q: "{学校|がっこう}まで {何|なに}で {来|き}ますか。", vi: "Bạn đến trường bằng gì?",
       hint: "～で {来|き}ます。",
-      kw: [["バス", "電車", "でんしゃ", "自転車", "じてんしゃ", "バイク", "車", "くるま", "歩いて", "あるいて", "地下鉄", "ちかてつ"]],
+      kw: [["バス", "電車", "でんしゃ", "自転車", "じてんしゃ", "バイク", "車", "くるま", "来る間", "歩いて", "あるいて", "歩き", "地下鉄", "ちかてつ", "タクシー", "オートバイ"]],
       a: "バイクで {来|き}ます。" },
   ];
 
@@ -141,7 +141,7 @@
 
       <div class="sp-result" hidden>
         <p class="sp-verdict"></p>
-        <p class="sp-heard" hidden><span>Bạn nói</span><q lang="ja"></q></p>
+        <p class="sp-heard" hidden><span>Máy nghe được</span><q lang="ja"></q></p>
         <div class="sp-actions">
           <button type="button" class="sp-chip" data-act="replay">${I.play}<span>Nghe lại</span></button>
           <button type="button" class="sp-chip" data-act="sample">${I.speaker}<span>Câu mẫu</span></button>
@@ -171,7 +171,7 @@
   try { lesson = Number(localStorage.getItem("spL")) || 0; } catch (e) {}
   let current = null;
   let lastIndex = -1;
-  let rec = null, stream = null, recog = null, chunks = [], transcript = "", interim = "";
+  let rec = null, stream = null, recog = null, chunks = [], transcript = "", interim = "", recogError = "";
   let recogDone = Promise.resolve();
   let timer = null, ringTl = null, startedAt = 0, audioUrl = null;
   const MAX_SECONDS = 20;
@@ -259,7 +259,7 @@
     if (canSpeak) speechSynthesis.cancel();
     player.pause();
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } });
     } catch (e) {
       setStatus(e && e.name === "NotAllowedError"
         ? "Bạn chưa cho phép dùng micro. Bấm biểu tượng ổ khoá trên thanh địa chỉ để bật."
@@ -269,6 +269,7 @@
     chunks = [];
     transcript = "";
     interim = "";
+    recogError = "";
     el.result.hidden = true;
     el.live.textContent = "";
     rec = new MediaRecorder(stream);
@@ -293,6 +294,22 @@
     }
   }
 
+  // How many key-word groups of the current question a piece of text covers.
+  function hitsIn(text) {
+    const t = norm(text);
+    return current.kw.filter((group) => group.some((w) => t.includes(norm(w)))).length;
+  }
+  // The recogniser offers several guesses for each phrase. Japanese has many words that sound
+  // the same, so take the guess that fits the expected answer best (the first one on a tie).
+  function bestGuess(result) {
+    let best = result[0].transcript, score = hitsIn(best);
+    for (let k = 1; k < result.length; k++) {
+      const s = hitsIn(result[k].transcript);
+      if (s > score) { score = s; best = result[k].transcript; }
+    }
+    return best;
+  }
+
   function startRecognition() {
     if (!SR) { recogDone = Promise.resolve(); return; }
     try {
@@ -300,17 +317,24 @@
       recog.lang = "ja-JP";
       recog.continuous = true;
       recog.interimResults = true;
-      recog.maxAlternatives = 1;
+      recog.maxAlternatives = 5;
       recogDone = new Promise((resolve) => {
         recog.onend = resolve;
-        recog.onerror = resolve;
+        recog.onerror = (e) => {
+          // "no-speech" and "aborted" are normal; the others mean this browser cannot transcribe.
+          if (e && e.error && !/no-speech|aborted/.test(e.error)) recogError = e.error;
+          resolve();
+        };
       });
       recog.onresult = (e) => {
         let fin = "", mid = "";
         for (let i = 0; i < e.results.length; i++) {
           const r = e.results[i];
-          if (r.isFinal) fin += r[0].transcript;
-          else mid += r[0].transcript;
+          if (!r.isFinal) { mid += r[0].transcript; continue; }
+          const seg = bestGuess(r);
+          // Chrome on Android repeats everything said so far in each new result: keep the longest.
+          if (fin && norm(seg).startsWith(norm(fin))) fin = seg;
+          else fin += seg;
         }
         transcript = fin;
         interim = mid;
@@ -353,8 +377,7 @@
 
   function check(text) {
     if (!text) return null;
-    const t = norm(text);
-    const hits = current.kw.filter((group) => group.some((w) => t.includes(norm(w)))).length;
+    const hits = hitsIn(text);
     const japanese = /[぀-ヿ一-鿿]/.test(text);
     if (hits === current.kw.length) return 2;
     return hits > 0 || japanese ? 1 : 0;
@@ -364,9 +387,11 @@
     const level = check(text);
     const V = {
       2: ["good", "よくできました！", "Trả lời đúng ý rồi."],
-      1: ["ok", "いいですね！", "Gần đúng. Thử nói theo mẫu gợi ý nhé."],
-      0: ["retry", "もう一度！", "Chưa nghe ra câu tiếng Nhật, thử lại nhé."],
-      none: ["self", "聞いてみよう", SR ? "Không nghe rõ. Nghe lại bản ghi và so với câu mẫu." : "Nghe lại bản ghi và so với câu mẫu nhé."],
+      1: ["ok", "いいですね！", "Máy chưa nghe ra từ khoá. Máy có thể nghe nhầm: bấm Nghe lại rồi so với câu mẫu."],
+      0: ["retry", "もう一度！", "Chưa nghe ra câu tiếng Nhật. Nói chậm, rõ, gần micro hơn nhé."],
+      none: ["self", "聞いてみよう", !SR || recogError
+        ? "Trình duyệt này không nhận dạng được giọng nói (Chrome hoặc Edge thì được). Nghe lại bản ghi và so với câu mẫu nhé."
+        : "Không nghe rõ. Nói to, gần micro hơn, hoặc nghe lại bản ghi và so với câu mẫu."],
     }[level === null ? "none" : level];
     el.verdict.className = `sp-verdict v-${V[0]}`;
     el.verdict.innerHTML = `<b lang="ja">${V[1]}</b><span>${V[2]}</span>`;
@@ -389,7 +414,10 @@
     el.avatar.classList.toggle("is-photo", !!speaker.hero);
     el.name.textContent = speaker.name;
     markLessons();
-    if (!dlg.open) dlg.showModal();
+    if (!dlg.open) {
+      dlg.showModal();
+      document.dispatchEvent(new CustomEvent("speak:open"));
+    }
     if (hasGsap && !reduced()) {
       gsap.fromTo(el.card, { autoAlpha: 0, y: 40, scale: 0.94 }, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.6)", clearProps: "transform,opacity,visibility" });
       gsap.fromTo(el.avatar, { scale: 0, rotation: -20 }, { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(2.5)", delay: 0.1 });
@@ -401,6 +429,7 @@
     if (canSpeak) speechSynthesis.cancel();
     player.pause();
     if (!dlg.open) return;
+    document.dispatchEvent(new CustomEvent("speak:close"));
     if (hasGsap && !reduced()) {
       gsap.to(el.card, { autoAlpha: 0, y: 30, scale: 0.96, duration: 0.25, ease: "power2.in", onComplete: () => { dlg.close(); gsap.set(el.card, { clearProps: "all" }); } });
     } else {

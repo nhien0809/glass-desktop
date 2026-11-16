@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../style.css?v=12">
+<link rel="stylesheet" href="../style.css?v=18">
 <link rel="stylesheet" href="study.css?v=10">
 <script>
 document.documentElement.classList.add("js");
@@ -33,19 +33,15 @@ document.documentElement.classList.add("js");
   <a class="side-btn" href="#tranh" data-view="tranh" data-label="Tranh" aria-label="Tranh kiểm tra"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9.5" r="1.8"/><path d="m4 18 5.5-5.2 4 3.7 2.6-2.4L21 18.5"/></svg></a>
   <button class="side-btn" type="button" data-speak data-label="Luyện nói" aria-label="Luyện nói"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
   <button class="side-btn" type="button" id="castToggle" aria-pressed="true" data-label="Nhân vật" aria-label="Bật/tắt nhân vật"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M5 20.5c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></button>
+  <button class="side-btn" type="button" id="fsBtn" data-label="Toàn màn hình" aria-label="Toàn màn hình" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
 </nav>
 
 <main class="wrap reveal">
   <header class="top">
     <div class="top-title">
       <a class="back-home" href="../">← Trang chủ</a>
-      <h1><span lang="ja">漢字</span>Kanji &amp; Đọc hiểu</h1>
+      <h1>Kanji &amp; Đọc hiểu</h1>
       <p class="subtitle">JPD133 · Dekiru Nihongo bài 8–11</p>
-      <ul class="stats">
-        <li><b>41</b> chữ Hán</li>
-        <li><b>11</b> bài đọc</li>
-        <li><b>10</b> tranh kiểm tra</li>
-      </ul>
     </div>
     <div class="top-side" aria-hidden="true">
       <div class="mini-clock" id="miniClock">00:00</div>
@@ -81,7 +77,6 @@ document.documentElement.classList.add("js");
         <li>Trả lời 3 câu hỏi bằng tiếng Nhật, rồi mới mở đáp án và bản dịch.</li>
       </ol>
     </details>
-    <p class="lookup-hint">Mẹo: di chuột (trên điện thoại thì chạm) vào chữ Hán hoặc katakana trong bài để xem cách đọc và nghĩa.</p>
     <div class="sub"><div class="filters" id="doc-filter"></div></div>
     <div class="plist hl" id="doc-out"></div>
   </section>
@@ -158,7 +153,7 @@ document.documentElement.classList.add("js");
     var out='';
     D.kanji.forEach(function(L){
       if(lessonSel!=='all'&&lessonSel!==L.lesson)return;
-      out+='<div class="lesson-h"><h2>Bài '+L.lesson+' · '+L.vi+'</h2><span class="jp">第'+L.lesson+'課　'+L.title+'</span><span class="count">'+L.items.length+' chữ</span></div><div class="grid">';
+      out+='<div class="lesson-h"><h2>Bài '+L.lesson+' · '+L.vi+'</h2></div><div class="grid">';
       L.items.forEach(function(it){
         out+='<div class="card" tabindex="0" aria-label="Chữ '+it.k+'">'+
           '<div class="box"><b>'+it.k+'</b><small>'+it.s+' nét</small></div>'+
@@ -455,9 +450,10 @@ document.documentElement.classList.add("js");
 })();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="../assets/glass-ui.js?v=10"></script>
-<script src="../assets/speak.js?v=10"></script>
-<script src="../assets/characters.js?v=10"></script>
+<script src="../assets/glass-ui.js?v=11"></script>
+<script src="../assets/speak.js?v=11"></script>
+<script src="../assets/characters.js?v=14"></script>
+<script src="../assets/music.js?v=20"></script>
 <script src="study.js?v=10"></script>
 </body>
 </html>

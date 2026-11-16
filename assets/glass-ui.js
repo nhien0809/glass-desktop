@@ -77,3 +77,48 @@
 
   window.GlassUI = { magnifyDock, hoverLift };
 })();
+
+/* Full-screen button in the sidebar (#fsBtn). Hidden where the browser cannot do it (iPhone Safari). */
+(() => {
+  const btn = document.getElementById("fsBtn");
+  const root = document.documentElement;
+  const request = root.requestFullscreen || root.webkitRequestFullscreen;
+  const exit = document.exitFullscreen || document.webkitExitFullscreen;
+  if (!btn || !request || !exit) return;
+  const ENTER = '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>';
+  const LEAVE = '<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>';
+  const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+  const want = () => { try { return sessionStorage.getItem("fs") === "1"; } catch (e) { return false; } };
+  const enter = () => {
+    try { const r = request.call(root); if (r && r.catch) r.catch(() => {}); } catch (e) {}
+  };
+  function show() {
+    const on = isFull();
+    const text = on ? "Thoát toàn màn hình" : "Toàn màn hình";
+    btn.dataset.label = text;
+    btn.setAttribute("aria-label", text);
+    btn.querySelector("svg").innerHTML = on ? LEAVE : ENTER;
+  }
+  btn.hidden = false;
+  btn.addEventListener("click", () => {
+    const on = isFull();
+    try { sessionStorage.setItem("fs", on ? "0" : "1"); } catch (e) {}
+    if (on) exit.call(document); else enter();
+  });
+  document.addEventListener("fullscreenchange", show);
+  document.addEventListener("webkitfullscreenchange", show);
+  // Browsers leave full screen when a new page loads. If the learner had it on, go back
+  // to full screen on their first click or key press on the new page.
+  if (want()) {
+    const again = (e) => {
+      document.removeEventListener("pointerup", again, true);
+      document.removeEventListener("keydown", again, true);
+      if (e.target && e.target.closest && e.target.closest("#fsBtn")) return;
+      if (e.key === "Escape") { try { sessionStorage.setItem("fs", "0"); } catch (err) {} return; }
+      if (want() && !isFull()) enter();
+    };
+    document.addEventListener("pointerup", again, true);
+    document.addEventListener("keydown", again, true);
+  }
+  show();
+})();
