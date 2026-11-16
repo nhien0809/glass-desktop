@@ -327,6 +327,14 @@
 
   window.addEventListener("pagehide", () => { if (playing) saveNow(true); });
 
+  // Full screen opens other pages in a covering frame (assets/glass-ui.js): its player takes over
+  // from the same second, so stop here without marking the music as stopped.
+  document.addEventListener("fs:handoff", () => {
+    if (!playing) return;
+    saveNow(true);
+    audio.pause();
+  });
+
   // Speaking practice needs quiet: pause while it is open, carry on afterwards.
   let heldForSpeak = false;
   document.addEventListener("speak:open", () => {

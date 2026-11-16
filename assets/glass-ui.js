@@ -88,47 +88,128 @@
   window.GlassUI = { magnifyDock, hoverLift };
 })();
 
-/* Full-screen button in the sidebar (#fsBtn). Hidden where the browser cannot do it (iPhone Safari). */
+/*
+ * Full-screen button in the sidebar (#fsBtn). Hidden where the browser cannot do it (iPhone Safari).
+ *
+ * Browsers leave full screen whenever the page loads a new document. So while full screen is on,
+ * a click on a link to another page of this site does not navigate the window: the page is opened
+ * in a frame that covers the screen, and every later move happens inside that frame. Leaving full
+ * screen loads the page that was showing in the frame normally. Music is handed over to the frame
+ * (it picks up at the same second) so it never plays twice.
+ */
 (() => {
   const btn = document.getElementById("fsBtn");
-  const root = document.documentElement;
-  const request = root.requestFullscreen || root.webkitRequestFullscreen;
-  const exit = document.exitFullscreen || document.webkitExitFullscreen;
-  if (!btn || !request || !exit) return;
+  if (!btn) return;
   const ENTER = '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>';
   const LEAVE = '<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>';
-  const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
-  const want = () => { try { return sessionStorage.getItem("fs") === "1"; } catch (e) { return false; } };
-  const enter = () => {
-    try { const r = request.call(root); if (r && r.catch) r.catch(() => {}); } catch (e) {}
-  };
-  function show() {
-    const on = isFull();
+  function paint(on) {
     const text = on ? "Thoát toàn màn hình" : "Toàn màn hình";
     btn.dataset.label = text;
     btn.setAttribute("aria-label", text);
     btn.querySelector("svg").innerHTML = on ? LEAVE : ENTER;
   }
-  btn.hidden = false;
-  btn.addEventListener("click", () => {
+
+  // Inside the full-screen frame: the button only drives the window around it.
+  let host = null;
+  try { if (window.top !== window && window.top.NihongoFS) host = window.top.NihongoFS; } catch (e) {}
+  if (host) {
+    btn.hidden = false;
+    paint(true);
+    btn.addEventListener("click", () => host.toggle());
+    return;
+  }
+
+  const root = document.documentElement;
+  const request = root.requestFullscreen || root.webkitRequestFullscreen;
+  const exit = document.exitFullscreen || document.webkitExitFullscreen;
+  if (!request || !exit) return;
+  const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+  const setWant = (on) => { try { sessionStorage.setItem("fs", on ? "1" : "0"); } catch (e) {} };
+  const want = () => { try { return sessionStorage.getItem("fs") === "1"; } catch (e) { return false; } };
+  let entering = false;
+  const enter = () => {
+    entering = true;
+    try {
+      const r = request.call(root);
+      if (r && r.then) r.then(() => { entering = false; }, () => { entering = false; });
+      else entering = false;
+    } catch (e) { entering = false; }
+  };
+  const toggle = () => {
     const on = isFull();
-    try { sessionStorage.setItem("fs", on ? "0" : "1"); } catch (e) {}
+    setWant(!on);
     if (on) exit.call(document); else enter();
+  };
+
+  /* ---------- The covering frame ---------- */
+  let frame = null;
+  function openInFrame(url) {
+    if (!frame) {
+      // Hand the music over: remember where it is, stop it here; the frame's player carries on.
+      document.dispatchEvent(new CustomEvent("fs:handoff"));
+      frame = document.createElement("iframe");
+      frame.className = "fs-frame";
+      frame.title = document.title;
+      frame.setAttribute("allow", "fullscreen; microphone; autoplay");
+      frame.addEventListener("load", () => {
+        try { document.title = frame.contentDocument.title; } catch (e) {}
+      });
+      document.body.appendChild(frame);
+      root.classList.add("fs-shell");
+      if (window.gsap) gsap.globalTimeline.pause(); // nothing to animate underneath
+    }
+    frame.src = url;
+  }
+  function leaveFrame() {
+    if (!frame) return;
+    let url = location.href;
+    try { url = frame.contentWindow.location.href; } catch (e) {}
+    location.href = url; // load what the learner was looking at, normally
+  }
+
+  // While full screen, links to other pages of this site open in the frame.
+  document.addEventListener("click", (e) => {
+    if (!(isFull() || entering) || e.defaultPrevented || e.button !== 0) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest && e.target.closest("a[href]");
+    if (!a || (a.target && a.target !== "_self") || a.hasAttribute("download")) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin) return;
+    if (url.pathname === location.pathname && url.search === location.search) return; // same page, just a #section
+    e.preventDefault();
+    openInFrame(url.href);
   });
-  document.addEventListener("fullscreenchange", show);
-  document.addEventListener("webkitfullscreenchange", show);
-  // Browsers leave full screen when a new page loads. If the learner had it on, go back
-  // to full screen on their first click or key press on the new page.
-  if (want()) {
+
+  function onChange() {
+    const on = isFull();
+    paint(on);
+    if (on) return;
+    // Out of full screen. A tab switch (opening Mazii, a dock link…) is not the learner's choice:
+    // keep the wish so the next click goes back to full screen. Esc or the button: they meant it.
+    if (!document.hidden) setWant(false);
+    leaveFrame();
+  }
+  document.addEventListener("fullscreenchange", onChange);
+  document.addEventListener("webkitfullscreenchange", onChange);
+
+  btn.hidden = false;
+  btn.addEventListener("click", toggle);
+  window.NihongoFS = { toggle };
+
+  // Came back to the tab, or arrived on a new page, with full screen wished for:
+  // go back to full screen on the first click or key press.
+  function armAgain() {
+    if (!want() || isFull()) return;
     const again = (e) => {
       document.removeEventListener("pointerup", again, true);
       document.removeEventListener("keydown", again, true);
       if (e.target && e.target.closest && e.target.closest("#fsBtn")) return;
-      if (e.key === "Escape") { try { sessionStorage.setItem("fs", "0"); } catch (err) {} return; }
+      if (e.key === "Escape") { setWant(false); return; }
       if (want() && !isFull()) enter();
     };
     document.addEventListener("pointerup", again, true);
     document.addEventListener("keydown", again, true);
   }
-  show();
+  armAgain();
+  paint(false);
 })();

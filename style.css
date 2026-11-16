@@ -984,3 +984,7 @@ a { color: inherit; }
 }
 
 .side-btn[hidden] { display: none; }
+
+/* Full screen: other pages open in a frame over this one (assets/glass-ui.js). */
+.fs-frame { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; z-index: 2147483647; background: #0d1420; }
+html.fs-shell body > :not(.fs-frame) { visibility: hidden; }
