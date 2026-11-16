@@ -62,7 +62,7 @@
     }
     if (chars.length) {
       html += `<div class="lk-chars">${chars.map((it) =>
-        `<div><b lang="ja">${esc(it.k)}</b>On ${esc(it.on)} · Kun ${esc(it.kun)}</div>`).join("")}</div>`;
+        `<div><b lang="ja">${esc(it.k)}</b>Âm Hán ${esc(it.on)} · Âm Nhật ${esc(it.kun)}</div>`).join("")}</div>`;
     }
     return html;
   }
