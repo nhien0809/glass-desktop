@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://images.unsplash.com" />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=12" />
+  <link rel="stylesheet" href="style.css?v=14" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body class="home">
@@ -91,10 +91,10 @@
           </a>
         </nav>
 
-        <div class="player widget" aria-label="Nhạc để học">
-          <div class="cover" id="cover" aria-hidden="true"><span></span></div>
+        <div class="player widget" id="player" aria-label="Nhạc">
+          <button type="button" class="cover" id="cover" aria-label="Mở danh sách nhạc"><img id="coverImg" alt="" hidden><span></span></button>
           <div class="player-body">
-            <div class="track">Untitled</div>
+            <div class="track"><span id="trackTitle">Bông Hoa Đẹp Nhất</span><small id="trackArtist">Quân A.P</small></div>
             <div class="progress" role="progressbar" aria-label="Tiến độ bài nhạc" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressFill"></span></div>
             <div class="controls">
               <button type="button" class="ctl" id="shuffleBtn" aria-label="Phát ngẫu nhiên" aria-pressed="false">
@@ -110,8 +110,8 @@
               <button type="button" class="ctl" id="nextBtn" aria-label="Bài tiếp">
                 <svg viewBox="0 0 24 24"><path d="M18 5v14M5 5l10 7-10 7V5Z" fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
               </button>
-              <button type="button" class="ctl" id="likeBtn" aria-label="Thích" aria-pressed="false">
-                <svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10Z" fill="currentColor"/></svg>
+              <button type="button" class="ctl" id="listBtn" aria-label="Danh sách nhạc và thêm link YouTube" title="Danh sách · thêm link YouTube">
+                <svg viewBox="0 0 24 24"><path d="M4 6h11M4 11h11M4 16h7M18 13v7M14.5 16.5h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
               </button>
             </div>
           </div>
@@ -133,6 +133,7 @@
   <script src="assets/glass-ui.js?v=10"></script>
   <script src="assets/speak.js?v=10"></script>
   <script src="assets/characters.js?v=10"></script>
-  <script src="main.js?v=10"></script>
+  <script src="assets/music.js?v=16"></script>
+  <script src="main.js?v=11"></script>
 </body>
 </html>

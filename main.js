@@ -62,64 +62,7 @@
   tick(false);
   setInterval(() => tick(true), 1000);
 
-  /* ---------------- Music player ---------------- */
-  const playBtn = $("#playBtn");
-  const progressBar = $(".progress");
-  const fill = $("#progressFill");
-  const TRACK_SECONDS = 184;
-  let playing = false;
-
-  let progressTween = null;
-  if (hasGsap) {
-    progressTween = gsap.to(fill, {
-      scaleX: 1,
-      duration: TRACK_SECONDS,
-      ease: "none",
-      paused: true,
-      onUpdate() {
-        progressBar.setAttribute("aria-valuenow", Math.round(this.progress() * 100));
-      },
-      onComplete() {
-        this.progress(0).play();
-      },
-    });
-  }
-
-  // Spinning vinyl cover (motion only, created inside matchMedia below).
-  let spin = null;
-
-  function setPlaying(state) {
-    playing = state;
-    playBtn.setAttribute("aria-pressed", String(state));
-    playBtn.setAttribute("aria-label", state ? "Pause" : "Play");
-    if (progressTween) state ? progressTween.play() : progressTween.pause();
-    if (spin) state ? spin.play() : spin.pause();
-  }
-
-  function pop(el) {
-    if (!canAnimate()) return;
-    gsap.fromTo(el, { scale: 0.8 }, { scale: 1, duration: 0.45, ease: "back.out(3)", overwrite: "auto" });
-  }
-
-  playBtn.addEventListener("click", () => {
-    setPlaying(!playing);
-    pop(playBtn);
-  });
-  ["#prevBtn", "#nextBtn"].forEach((id) => {
-    $(id).addEventListener("click", (e) => {
-      if (progressTween) progressTween.progress(0);
-      if (progressTween && !playing) progressTween.pause();
-      progressBar.setAttribute("aria-valuenow", "0");
-      pop(e.currentTarget);
-    });
-  });
-  ["#shuffleBtn", "#likeBtn"].forEach((id) => {
-    $(id).addEventListener("click", (e) => {
-      const btn = e.currentTarget;
-      btn.setAttribute("aria-pressed", String(btn.getAttribute("aria-pressed") !== "true"));
-      pop(btn);
-    });
-  });
+  /* Music player: see assets/music.js */
 
   /* ---------------- Kanji of the day (dark card) ---------------- */
   const card = $("#kcard");
@@ -229,16 +172,12 @@
         .from(".dock", { autoAlpha: 0, y: 70 }, "dock")
         .from(".dock-item", { autoAlpha: 0, y: 24, duration: 0.5, ease: "back.out(2)", stagger: 0.05 }, "dock+=0.2");
 
-
-      /* Spinning cover while music plays */
-      spin = gsap.to("#cover", { rotation: 360, duration: 6, ease: "none", repeat: -1, paused: !playing });
-
       // The hero breathes a little; the mic on the "Luyện nói" chip wiggles now and then.
       const idle = gsap.to(".hero img", { y: -6, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 });
       const nudge = gsap.timeline({ repeat: -1, repeatDelay: 6, delay: 3 })
         .to(".talk-chip svg", { rotation: 14, duration: 0.12, yoyo: true, repeat: 5, ease: "sine.inOut", transformOrigin: "50% 80%" });
 
-      const cleanups = [() => { spin = null; }, () => { idle.kill(); nudge.kill(); }];
+      const cleanups = [() => { idle.kill(); nudge.kill(); }];
 
       if (hover) {
         const panel = $(".panel");
