@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../style.css?v=23">
-<link rel="stylesheet" href="study.css?v=13">
+<link rel="stylesheet" href="../style.css?v=24">
+<link rel="stylesheet" href="study.css?v=14">
 <script>
 document.documentElement.classList.add("js");
 /* ?bai=8 from the home lesson cards: preselect that lesson in every filter, then tidy the URL. */
@@ -33,6 +33,7 @@ document.documentElement.classList.add("js");
   <a class="side-btn" href="#tranh" data-view="tranh" data-label="Tranh" aria-label="Tranh kiểm tra"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9.5" r="1.8"/><path d="m4 18 5.5-5.2 4 3.7 2.6-2.4L21 18.5"/></svg></a>
   <button class="side-btn" type="button" data-speak data-label="Luyện nói" aria-label="Luyện nói"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
   <button class="side-btn" type="button" id="castToggle" aria-pressed="true" data-label="Nhân vật" aria-label="Bật/tắt nhân vật"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M5 20.5c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/></svg></button>
+  <button class="side-btn" type="button" id="helpBtn" data-label="Hướng dẫn" aria-label="Xem hướng dẫn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.8"/><path d="M12 17.2v.1"/></svg></button>
   <button class="side-btn" type="button" id="fsBtn" data-label="Toàn màn hình" aria-label="Toàn màn hình" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
 </nav>
 
@@ -118,20 +119,19 @@ document.documentElement.classList.add("js");
   function plainRuby(s){return s.replace(/\{([^|}]+)\|([^}]+)\}/g,'<ruby>$1<rt>$2</rt></ruby>')}
   function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 
-  /* Đứng một mình = từ chỉ có 1 chữ Hán; ghép từ = từ có từ 2 chữ Hán trở lên */
-  var RB0=/\{([^|}]+)\|([^}]+)\}/g;
-  function wPlain(x){return x[0].replace(RB0,'$1')}
-  function wRead(x){return x[0].replace(RB0,'$2')}
-  function nK(s){return (s.match(/[一-鿿]/g)||[]).length}
-  function splitEx(it){var a=[],b=[];it.ex.forEach(function(x){(nK(wPlain(x))>1?b:a).push(x)});return [a,b]}
-  function soloLabel(it){return it.solo||(it.kun==='—'?'không dùng một mình':'âm Nhật '+it.kun)}
-  function onLabel(it){return 'âm Hán '+it.on}
-  function txtEx(x){return '<span class="tw2">'+wPlain(x)+'</span>（'+wRead(x)+'）'+(x[2]?' <span class="note">'+esc(x[2])+'</span>':'')}
-  function kanjiGloss(it){
-    var s=splitEx(it);
-    return '<div class="gk"><div class="gkh"><span class="gkc">'+it.k+'</span><span class="hv">'+it.hv+'</span></div>'+
-      '<div class="gl"><b>Đứng một mình</b> · '+soloLabel(it)+(s[0].length?'<br>'+s[0].map(txtEx).join('、'):'')+'</div>'+
-      '<div class="gl"><b>Ghép từ</b> · '+onLabel(it)+(s[1].length?'<br>'+s[1].map(txtEx).join('、'):'')+'</div></div>';
+  /* One kanji card, same look as the kanji card on the home page (Học chữ Hán + Bài đọc). */
+  function kanjiCard(it){
+    return '<div class="card kcard kc-card" tabindex="0" aria-label="Chữ '+it.k+'">'+
+          '<div class="kc-body"><span class="kc-lesson">'+it.s+' nét</span>'+
+          '<div class="kc-char" lang="ja" title="'+esc(it.tip||'')+'">'+it.k+'</div>'+
+          '<dl class="kc-info">'+
+            '<div><dt>Hán Việt</dt><dd class="kc-hv hide">'+it.hv+'</dd></div>'+
+            '<div><dt>Âm Nhật</dt><dd class="hide" lang="ja">'+it.kun+'</dd></div>'+
+            '<div><dt>Âm Hán</dt><dd class="hide" lang="ja">'+it.on+'</dd></div>'+
+            '<div class="kc-exrow"><dt>Ví dụ</dt><dd class="kc-ex hide">'+it.ex.map(function(x){
+              var full=esc(x[1])+(x[2]?' · '+esc(x[2]):'');
+              return '<span class="kc-exi" title="'+full+'"><span lang="ja">'+plainRuby(esc(x[0]))+'</span><small>'+esc(x[1])+(x[2]?'<i class="kc-note" aria-hidden="true">*</i>':'')+'</small></span>'}).join('')+'</dd></div>'+
+          '</dl></div></div>';
   }
 
   /* ---------- Kanji view ---------- */
@@ -147,18 +147,7 @@ document.documentElement.classList.add("js");
       if(lessonSel!=='all'&&lessonSel!==L.lesson)return;
       out+='<div class="lesson-h"><h2>Bài '+L.lesson+' · '+L.vi+'</h2></div><div class="grid">';
       L.items.forEach(function(it){
-        // Same look as the kanji card on the home page.
-        out+='<div class="card kcard kc-card" tabindex="0" aria-label="Chữ '+it.k+'">'+
-          '<div class="kc-body"><span class="kc-lesson">'+it.s+' nét</span>'+
-          '<div class="kc-char" lang="ja" title="'+esc(it.tip||'')+'">'+it.k+'</div>'+
-          '<dl class="kc-info">'+
-            '<div><dt>Hán Việt</dt><dd class="kc-hv hide">'+it.hv+'</dd></div>'+
-            '<div><dt>Âm Nhật</dt><dd class="hide" lang="ja">'+it.kun+'</dd></div>'+
-            '<div><dt>Âm Hán</dt><dd class="hide" lang="ja">'+it.on+'</dd></div>'+
-            '<div class="kc-exrow"><dt>Ví dụ</dt><dd class="kc-ex hide">'+it.ex.map(function(x){
-              var full=esc(x[1])+(x[2]?' · '+esc(x[2]):'');
-              return '<span class="kc-exi" title="'+full+'"><span lang="ja">'+plainRuby(esc(x[0]))+'</span><small>'+esc(x[1])+(x[2]?'<i class="kc-note" aria-hidden="true">*</i>':'')+'</small></span>'}).join('')+'</dd></div>'+
-          '</dl></div></div>';
+        out+=kanjiCard(it);
       });
       out+='</div>';
     });
@@ -195,8 +184,8 @@ document.documentElement.classList.add("js");
     RB.lastIndex=0;
     while((m=RB.exec(src))){var key=m[1]+'|'+m[2];if(seen[key])continue;seen[key]=1;
       (exByPair[key]||[[m[1],m[2],'']]).forEach(function(e){rows.push(e)});}
-    return '<div class="gloss"><h4>5 chữ Hán của bài: cách đọc khi đứng một mình và khi ghép từ</h4><div class="gks">'+
-      p.kanji.map(function(k){return kanjiGloss(kinfo[k])}).join('')+'</div>'+
+    return '<div class="gloss"><h4>Chữ Hán trong bài</h4><div class="gks">'+
+      p.kanji.map(function(k){return kanjiCard(kinfo[k])}).join('')+'</div>'+
       '<h4>Từ có chữ Hán trong bài</h4><ul>'+rows.map(function(e){
       return '<li><span class="gw">'+e[0]+'</span><span class="gr">'+e[1]+'</span>'+(e[2]?'<span class="gm">'+esc(e[2])+'</span>':'')+'</li>'}).join('')+'</ul></div>';
   }
@@ -452,6 +441,7 @@ document.documentElement.classList.add("js");
 <script src="../assets/speak.js?v=11"></script>
 <script src="../assets/characters.js?v=14"></script>
 <script src="../assets/music.js?v=21"></script>
+<script src="../assets/tour.js?v=2"></script>
 <script src="study.js?v=12"></script>
 </body>
 </html>

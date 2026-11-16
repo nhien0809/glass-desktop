@@ -14,6 +14,7 @@ Trang web: https://nhien0809.github.io/glass-desktop/
 - Thanh bên chỉ có icon (rê chuột để xem tên): Tra từ, Trang chủ, Chữ Hán, Bài đọc, Tranh, Luyện nói, bật/tắt nhân vật.
 - Nhân vật đi lại ở mép dưới màn hình: Moka và Rin (ảnh minh hoạ bạn gửi, cắt nền trong suốt).
 - Nút toàn màn hình ở thanh bên (bấm lần nữa hoặc Esc để thoát).
+- Hướng dẫn từng bước tự hiện ở lần đầu vào trang chủ và Sổ học; nút **Hướng dẫn** (dấu ?) ở thanh bên để xem lại.
 - Dock công cụ: Mazii, Google Dịch, Jisho, NHK News Web Easy, YouTube, Spotify, có hiệu ứng phóng to khi rê chuột.
 
 ## Luyện nói
@@ -63,6 +64,7 @@ Rồi mở http://localhost:5173.
 - `assets/speak.js`: cửa sổ luyện nói (câu hỏi, giọng đọc, ghi âm, chấm).
 - `assets/characters.js`: nhân vật chibi đi lại.
 - `assets/music.js`: trình phát nhạc (file từ máy, lưu trong IndexedDB).
+- `assets/tour.js`: hướng dẫn từng bước (lần đầu vào trang, nút Hướng dẫn).
 - `assets/hero.webp`: nhân vật ở giữa (ảnh nền trong suốt bạn gửi).
 - `assets/kanji.json`: danh sách chữ Hán cho thẻ "Kanji hôm nay".
 
