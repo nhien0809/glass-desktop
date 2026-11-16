@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,7 +8,7 @@
   <link rel="icon" href="assets/icons/figma.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Klee+One:wght@600&family=Noto+Sans+JP:wght@400;500;700&family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -49,9 +49,45 @@
         </div>
       </div>
 
-      <div class="col-center" aria-hidden="true">
-        <div class="orb orb-a"></div>
-        <div class="orb orb-b"></div>
+      <div class="col-center">
+        <div class="orb orb-a" aria-hidden="true"></div>
+        <div class="orb orb-b" aria-hidden="true"></div>
+
+        <section class="study widget" id="study" aria-labelledby="studyTitle">
+          <div class="study-head">
+            <h2 class="study-tag" id="studyTitle"><span lang="ja">日本語</span> · Kanji hôm nay</h2>
+            <span class="study-lesson" id="kLesson">Bài 8</span>
+          </div>
+
+          <div class="study-body" id="kBody">
+            <div class="study-main">
+              <div class="kanji-big" id="kChar" lang="ja">家</div>
+              <div class="kanji-info quizable">
+                <div class="kanji-hv" id="kHv">—</div>
+                <dl class="kanji-read">
+                  <dt>On</dt><dd id="kOn" lang="ja">—</dd>
+                  <dt>Kun</dt><dd id="kKun" lang="ja">—</dd>
+                </dl>
+              </div>
+            </div>
+            <ul class="kanji-ex quizable" id="kEx"></ul>
+            <p class="kanji-tip quizable" id="kTip"></p>
+          </div>
+
+          <div class="study-ctl">
+            <button type="button" class="s-btn" id="kPrev" aria-label="Chữ trước">‹</button>
+            <span class="k-count" id="kCount">1 / 41</span>
+            <button type="button" class="s-btn" id="kNext" aria-label="Chữ tiếp theo">›</button>
+            <button type="button" class="s-chip" id="kQuiz" aria-pressed="false">Che đáp án</button>
+          </div>
+          <p class="quiz-hint" id="kHint" hidden>Tự nói âm Hán Việt, On, Kun rồi bấm vào phần bị che để xem.</p>
+
+          <nav class="study-links" aria-label="Sổ học tiếng Nhật">
+            <a href="hoc/#kanji">Học chữ Hán</a>
+            <a href="hoc/#doc">Bài đọc</a>
+            <a href="hoc/#tranh">Tranh kiểm tra</a>
+          </nav>
+        </section>
       </div>
 
       <div class="col-right">
@@ -108,6 +144,7 @@
       <a class="dock-item" href="https://www.google.com/chrome/" target="_blank" rel="noopener" aria-label="Chrome"><span class="chrome" aria-hidden="true"><span></span></span></a>
       <a class="dock-item" href="https://www.adobe.com/products/aftereffects.html" target="_blank" rel="noopener" aria-label="After Effects"><span class="app-tile ae">Ae</span></a>
       <a class="dock-item" href="https://discord.com/" target="_blank" rel="noopener" aria-label="Discord"><i class="ico" style="--i:url(assets/icons/discord.svg);--c:#7983f5"></i></a>
+      <a class="dock-item" href="hoc/" aria-label="Sổ học tiếng Nhật"><span class="app-tile jp" lang="ja">日</span></a>
     </nav>
   </main>
 

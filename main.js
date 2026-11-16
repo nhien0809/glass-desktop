@@ -157,6 +157,76 @@
     });
   });
 
+  /* ---------------- Japanese study card (Kanji hôm nay) ---------------- */
+  const study = $("#study");
+  const kBody = $("#kBody");
+  const quizBtn = $("#kQuiz");
+  let kanji = [];
+  let kIndex = 0;
+
+  const escapeHtml = (s) => String(s).replace(/[&<>"']/g, (c) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[c]);
+  // "{家族|かぞく}" -> <ruby>家族<rt>かぞく</rt></ruby>
+  const toRuby = (s) => escapeHtml(s).replace(/\{([^|}]+)\|([^}]+)\}/g, "<ruby>$1<rt>$2</rt></ruby>");
+
+  function fillKanji(i) {
+    const it = kanji[i];
+    $("#kChar").textContent = it.k;
+    $("#kHv").textContent = it.hv;
+    $("#kOn").textContent = it.on;
+    $("#kKun").textContent = it.kun;
+    $("#kTip").textContent = it.tip || "";
+    $("#kLesson").textContent = `Bài ${it.l}`;
+    $("#kCount").textContent = `${i + 1} / ${kanji.length}`;
+    $("#kEx").innerHTML = it.ex.map(([w, m, note]) =>
+      `<li><span class="w" lang="ja">${toRuby(w)}</span><span class="m">${escapeHtml(m)}${note ? `<span class="note">${escapeHtml(note)}</span>` : ""}</span></li>`
+    ).join("");
+    $$(".quizable", study).forEach((el) => el.classList.remove("shown"));
+  }
+
+  function showKanji(i, dir) {
+    kIndex = (i + kanji.length) % kanji.length;
+    if (!canAnimate() || !dir) {
+      fillKanji(kIndex);
+      return;
+    }
+    // Slide the old card out, swap content, slide the new one in.
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+    tl.to(kBody, { x: -24 * dir, autoAlpha: 0, duration: 0.18, ease: "power2.in", overwrite: "auto" })
+      .call(() => fillKanji(kIndex))
+      .fromTo(kBody, { x: 24 * dir }, { x: 0, autoAlpha: 1, duration: 0.35 })
+      .fromTo("#kChar", { scale: 0.7, rotation: -8 }, { scale: 1, rotation: 0, duration: 0.5, ease: "back.out(2.2)" }, "<");
+  }
+
+  $("#kPrev").addEventListener("click", () => kanji.length && showKanji(kIndex - 1, -1));
+  $("#kNext").addEventListener("click", () => kanji.length && showKanji(kIndex + 1, 1));
+  quizBtn.addEventListener("click", () => {
+    const on = quizBtn.getAttribute("aria-pressed") !== "true";
+    quizBtn.setAttribute("aria-pressed", String(on));
+    study.classList.toggle("quiz", on);
+    $("#kHint").hidden = !on;
+    $$(".quizable", study).forEach((el) => el.classList.remove("shown"));
+  });
+  study.addEventListener("click", (e) => {
+    if (!study.classList.contains("quiz")) return;
+    const part = e.target.closest(".quizable");
+    if (part) part.classList.add("shown");
+  });
+
+  fetch("assets/kanji.json")
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then((list) => {
+      kanji = list;
+      // Same "kanji of the day" for the whole day, rotating through all 41.
+      const now = new Date();
+      const dayNumber = Math.floor(new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 86400000);
+      showKanji(dayNumber % kanji.length, 0);
+    })
+    .catch(() => {
+      $("#kTip").textContent = "Không tải được danh sách chữ Hán.";
+    });
+
   if (!hasGsap) return;
 
   /* ---------------- GSAP animation ---------------- */
@@ -190,6 +260,8 @@
         .from(".top-row, .greet", { autoAlpha: 0, y: -20, stagger: 0.1 }, "widgets")
         .from(".card", { autoAlpha: 0, y: 30, scale: 0.9, stagger: 0.08 }, "widgets+=0.15")
         .from(".player", { autoAlpha: 0, y: 24 }, "widgets+=0.4")
+        .from(".study", { autoAlpha: 0, y: 40, scale: 0.95, duration: 1 }, "widgets+=0.2")
+        .from(".study-links a", { autoAlpha: 0, y: 10, stagger: 0.08, duration: 0.4 }, "<0.5")
         .from(".orb", { autoAlpha: 0, scale: 0.6, duration: 1.4, stagger: 0.2 }, "widgets")
         .addLabel("dock", "widgets+=0.3")
         .from(".dock", { autoAlpha: 0, y: 70 }, "dock")
@@ -218,7 +290,7 @@
         });
 
         /* Subtle lift for the widgets */
-        $$(".calendar, .player").forEach((el) => {
+        $$(".calendar, .player, .study").forEach((el) => {
           const enter = () => gsap.to(el, { y: -4, duration: 0.3, ease: "power2.out", overwrite: "auto" });
           const leave = () => gsap.to(el, { y: 0, duration: 0.4, ease: "power2.out", overwrite: "auto" });
           el.addEventListener("mouseenter", enter);

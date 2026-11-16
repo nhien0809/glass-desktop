@@ -2,6 +2,11 @@
 
 A glassmorphism "desktop" dashboard built with plain HTML, CSS and JavaScript, animated with [GSAP](https://gsap.com/).
 
+## Học tiếng Nhật (JPD133)
+
+- **Kanji hôm nay** (giữa màn hình): mỗi ngày một chữ trong 41 chữ Hán bài 8–11, có âm Hán Việt, On, Kun, từ ví dụ có furigana và mẹo nhớ. Có nút ‹ › để xem chữ khác và nút "Che đáp án" để tự kiểm tra.
+- **Sổ học** ở [`hoc/`](hoc/): Học chữ Hán, 10 bài đọc hiểu và Tranh kiểm tra. Mở từ các nút dưới thẻ Kanji hoặc ô 日 trên dock.
+
 ## Features
 
 - Frosted-glass panel over a blurred city scene (hand-drawn SVG, no third-party artwork)
