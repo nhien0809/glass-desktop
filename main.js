@@ -87,7 +87,8 @@
     $("#kKun").textContent = it.kun;
     $("#kLesson").textContent = `Bài ${it.l}`;
     $("#kCount").textContent = `${i + 1} / ${kanji.length}`;
-    $("#kEx").innerHTML = `<span lang="ja">${toRuby(ex[0])}</span><small>${escapeHtml(ex[1])}</small>`;
+    $("#kEx").innerHTML = `<span class="kc-exi"><span lang="ja">${toRuby(ex[0])}</span><small>${escapeHtml(ex[1])}</small></span>`;
+    if (window.GlassUI) GlassUI.fitLines(card);
     $$(".quizable", card).forEach((el) => el.classList.remove("shown"));
   }
 

@@ -85,7 +85,42 @@
     };
   }
 
-  window.GlassUI = { magnifyDock, hoverLift };
+  /**
+   * Shrink each line (default: kanji examples) just enough to fit its width on one line.
+   */
+  function fitLines(root = document, selector = ".kc-exi", min = 12) {
+    root.querySelectorAll(selector).forEach((el) => {
+      el.style.fontSize = "";
+      if (!el.clientWidth) return; // hidden tab: done when it shows
+      // Width the parts would need side by side (a part may itself be allowed to clip with "…").
+      const need = () => {
+        const kids = [...el.children];
+        const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+        return kids.reduce((w, k) => w + k.scrollWidth, 0) + gap * Math.max(0, kids.length - 1);
+      };
+      let size = parseFloat(getComputedStyle(el).fontSize);
+      while (need() > el.clientWidth + 1 && size > min) {
+        size -= 0.5;
+        el.style.fontSize = `${size}px`;
+      }
+    });
+  }
+  // Refit whenever cards are (re)drawn, a tab is shown, the window resizes or the fonts arrive.
+  let fitQueued = false;
+  const refit = () => {
+    if (fitQueued) return;
+    fitQueued = true;
+    requestAnimationFrame(() => { fitQueued = false; fitLines(); });
+  };
+  new MutationObserver((list) => {
+    if (list.some((m) => m.type === "attributes" || [...m.addedNodes].some((n) => n.nodeType === 1 && (n.matches(".kc-exi") || n.querySelector(".kc-exi"))))) refit();
+  }).observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ["hidden"] });
+  window.addEventListener("resize", refit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refit);
+  document.addEventListener("DOMContentLoaded", refit);
+  refit();
+
+  window.GlassUI = { magnifyDock, hoverLift, fitLines };
 })();
 
 /*
