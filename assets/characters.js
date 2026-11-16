@@ -363,33 +363,59 @@
     actors.forEach((a, i) => { a.wait = gsap.delayedCall(0.6 + i * 0.7, () => wander(a)); });
   }
 
-  /* ---------------- Toggle (sidebar 人 · Nhân vật) ---------------- */
-  const toggle = document.getElementById("castToggle");
+  /* ---------------- On/off: floating switch + sidebar 人 button, kept in sync ---------------- */
+  const sideToggle = document.getElementById("castToggle");
+  const sw = document.createElement("button");
+  sw.type = "button";
+  sw.className = "cast-switch";
+  sw.setAttribute("role", "switch");
+  sw.innerHTML = `
+    <span class="cs-ico" lang="ja" aria-hidden="true">人</span>
+    <span class="cs-label">Nhân vật</span>
+    <span class="cs-state" aria-hidden="true"></span>
+    <span class="cs-track" aria-hidden="true"><span class="cs-thumb"></span></span>`;
+  document.body.appendChild(sw);
+  const thumb = sw.querySelector(".cs-thumb");
+  const stateText = sw.querySelector(".cs-state");
+
   let enabled = true;
   try { enabled = localStorage.getItem("cast") !== "0"; } catch (e) {}
-  function setEnabled(on) {
+  function setEnabled(on, animate) {
     enabled = on;
     layer.hidden = !on;
-    if (toggle) {
-      toggle.setAttribute("aria-pressed", String(on));
-      toggle.title = on ? "Ẩn nhân vật" : "Hiện nhân vật";
+    sw.setAttribute("aria-checked", String(on));
+    sw.title = on ? "Bấm để ẩn nhân vật" : "Bấm để hiện nhân vật";
+    stateText.textContent = on ? "Bật" : "Tắt";
+    const travel = thumb.parentElement.clientWidth - thumb.offsetWidth - 4;
+    gsap.to(thumb, { x: on ? travel : 0, duration: animate && !reduced() ? 0.25 : 0, ease: "back.out(2)" });
+    if (sideToggle) {
+      sideToggle.setAttribute("aria-pressed", String(on));
+      sideToggle.title = sw.title;
     }
     try { localStorage.setItem("cast", on ? "1" : "0"); } catch (e) {}
     if (on) {
       startAll();
-      gsap.from(actors.map((a) => a.sprite), { autoAlpha: 0, y: 30, duration: 0.6, stagger: 0.12, ease: "back.out(1.8)" });
+      if (animate && !reduced()) {
+        gsap.from(actors.map((a) => a.sprite), { autoAlpha: 0, y: 30, duration: 0.6, stagger: 0.12, ease: "back.out(1.8)" });
+      }
     } else {
       stopAll();
+      actors.forEach((a) => gsap.set(a.bubble, { autoAlpha: 0 }));
     }
   }
-  if (toggle) toggle.addEventListener("click", () => setEnabled(!enabled));
+  sw.addEventListener("click", () => setEnabled(!enabled, true));
+  if (sideToggle) sideToggle.addEventListener("click", () => setEnabled(!enabled, true));
 
   let resizeTimer;
   window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => { if (enabled) startAll(); }, 250);
+    resizeTimer = setTimeout(() => { setEnabled(enabled, false); }, 250);
   });
   window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", () => { if (enabled) startAll(); });
 
-  setEnabled(enabled);
+  setEnabled(enabled, false);
+  if (enabled && !reduced()) {
+    gsap.from(actors.map((a) => a.sprite), { autoAlpha: 0, y: 30, duration: 0.6, stagger: 0.12, delay: 1, ease: "back.out(1.8)" });
+  }
+  if (!reduced()) gsap.from(sw, { autoAlpha: 0, y: 20, duration: 0.5, delay: 1.2, ease: "power3.out" });
 })();
