@@ -52,12 +52,13 @@
     const mm = pad(now.getMinutes());
     const chars = (hh + mm).split("");
     digitSlots.forEach((slot, i) => setDigit(slot, chars[i], animate && canAnimate()));
-    clockEl.setAttribute("aria-label", `Current time ${hh}:${mm}`);
+    clockEl.setAttribute("aria-label", `Giờ hiện tại ${hh}:${mm}`);
 
     const dayKey = now.toDateString();
     if (dayKey !== lastDay) {
       lastDay = dayKey;
       dateEl.textContent = `${WEEKDAYS[now.getDay()]} ${pad(now.getMonth() + 1)}/${pad(now.getDate())}`;
+      $("#dateJp").textContent = `${now.getMonth() + 1}月${now.getDate()}日（${"日月火水木金土"[now.getDay()]}）`;
       renderCalendar(now);
     }
   }
@@ -69,7 +70,7 @@
     const firstWeekday = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    $("#calMonth").textContent = MONTHS[month];
+    $("#calMonth").innerHTML = `${MONTHS[month]} <span lang="ja">${month + 1}月</span>`;
     const frag = document.createDocumentFragment();
     for (let i = 0; i < firstWeekday; i++) {
       const blank = document.createElement("span");
@@ -92,11 +93,6 @@
 
   tick(false);
   setInterval(() => tick(true), 1000);
-
-  /* ---------------- Search button ---------------- */
-  $("#searchBtn").addEventListener("click", () => {
-    window.open("https://www.google.com/", "_blank", "noopener");
-  });
 
   /* ---------------- Music player ---------------- */
   const playBtn = $("#playBtn");
@@ -258,7 +254,7 @@
         .from(".clock-wrap", { autoAlpha: 0, y: 30 }, "widgets")
         .from(".calendar", { autoAlpha: 0, y: 40, rotationX: -15, transformOrigin: "50% 0%" }, "widgets+=0.12")
         .from(".top-row, .greet", { autoAlpha: 0, y: -20, stagger: 0.1 }, "widgets")
-        .from(".card", { autoAlpha: 0, y: 30, scale: 0.9, stagger: 0.08 }, "widgets+=0.15")
+        .from(".lesson-card", { autoAlpha: 0, y: 30, scale: 0.9, stagger: 0.08 }, "widgets+=0.15")
         .from(".player", { autoAlpha: 0, y: 24 }, "widgets+=0.4")
         .from(".study", { autoAlpha: 0, y: 40, scale: 0.95, duration: 1 }, "widgets+=0.2")
         .from(".study-links a", { autoAlpha: 0, y: 10, stagger: 0.08, duration: 0.4 }, "<0.5")
@@ -277,79 +273,20 @@
       const cleanups = [() => { spin = null; }];
 
       if (hover) {
-        /* Hover lift on gallery cards */
-        $$(".card").forEach((card) => {
-          const enter = () => gsap.to(card, { y: -8, scale: 1.04, duration: 0.35, ease: "power2.out", overwrite: "auto" });
-          const leave = () => gsap.to(card, { y: 0, scale: 1, duration: 0.45, ease: "power2.out", overwrite: "auto" });
-          card.addEventListener("mouseenter", enter);
-          card.addEventListener("mouseleave", leave);
-          cleanups.push(() => {
-            card.removeEventListener("mouseenter", enter);
-            card.removeEventListener("mouseleave", leave);
-          });
-        });
-
-        /* Subtle lift for the widgets */
-        $$(".calendar, .player, .study").forEach((el) => {
-          const enter = () => gsap.to(el, { y: -4, duration: 0.3, ease: "power2.out", overwrite: "auto" });
-          const leave = () => gsap.to(el, { y: 0, duration: 0.4, ease: "power2.out", overwrite: "auto" });
-          el.addEventListener("mouseenter", enter);
-          el.addEventListener("mouseleave", leave);
-          cleanups.push(() => {
-            el.removeEventListener("mouseenter", enter);
-            el.removeEventListener("mouseleave", leave);
-          });
-        });
+        const panel = $(".panel");
+        cleanups.push(
+          GlassUI.hoverLift(panel, ".lesson-card", { y: -8, scale: 1.04 }),
+          GlassUI.hoverLift(panel, ".calendar, .player, .study", { y: -4 })
+        );
 
         /* Dock magnify (macOS-style) */
         const dock = $(".dock");
-        const items = $$(".dock-item");
-        const RANGE = 130;
-        const MAX_SCALE = 1.5;
-        const toScale = gsap.utils.pipe(
-          gsap.utils.clamp(0, RANGE),
-          gsap.utils.mapRange(0, RANGE, MAX_SCALE, 1)
+        const finishIntro = () => intro.progress(1);
+        dock.addEventListener("mouseenter", finishIntro);
+        cleanups.push(
+          () => dock.removeEventListener("mouseenter", finishIntro),
+          GlassUI.magnifyDock(dock)
         );
-        // quickTo animates a single real property, so drive scaleX and scaleY separately.
-        const quick = (item, prop) => gsap.quickTo(item, prop, { duration: 0.3, ease: "power3.out" });
-        const setters = items.map((item) => {
-          const sx = quick(item, "scaleX");
-          const sy = quick(item, "scaleY");
-          return { scale: (v) => { sx(v); sy(v); }, y: quick(item, "y") };
-        });
-        let centers = [];
-
-        const measure = () => {
-          // Read layout once (untransformed offsets) to avoid feedback from the scaling itself.
-          const left = dock.getBoundingClientRect().left + dock.clientLeft;
-          centers = items.map((item) => left + item.offsetLeft + item.offsetWidth / 2);
-        };
-        const onEnter = () => {
-          intro.progress(1);
-          measure();
-        };
-        const onMove = (e) => {
-          if (!centers.length) measure();
-          items.forEach((_, i) => {
-            const s = toScale(Math.abs(e.clientX - centers[i]));
-            setters[i].scale(s);
-            setters[i].y(-(s - 1) * 22);
-          });
-        };
-        const onLeave = () => {
-          setters.forEach((s) => { s.scale(1); s.y(0); });
-          centers = [];
-        };
-        dock.addEventListener("mouseenter", onEnter);
-        dock.addEventListener("mousemove", onMove);
-        dock.addEventListener("mouseleave", onLeave);
-        window.addEventListener("resize", onLeave);
-        cleanups.push(() => {
-          dock.removeEventListener("mouseenter", onEnter);
-          dock.removeEventListener("mousemove", onMove);
-          dock.removeEventListener("mouseleave", onLeave);
-          window.removeEventListener("resize", onLeave);
-        });
       }
 
       return () => cleanups.forEach((fn) => fn());
