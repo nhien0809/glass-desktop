@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="../style.css?v=21">
-<link rel="stylesheet" href="study.css?v=11">
+<link rel="stylesheet" href="study.css?v=12">
 <script>
 document.documentElement.classList.add("js");
 /* ?bai=8 from the home lesson cards: preselect that lesson in every filter, then tidy the URL. */
@@ -126,7 +126,6 @@ document.documentElement.classList.add("js");
   function splitEx(it){var a=[],b=[];it.ex.forEach(function(x){(nK(wPlain(x))>1?b:a).push(x)});return [a,b]}
   function soloLabel(it){return it.solo||(it.kun==='—'?'không dùng một mình':'âm Nhật '+it.kun)}
   function onLabel(it){return 'âm Hán '+it.on}
-  function exLi(x){return '<li><span class="w">'+plainRuby(x[0])+'</span><span class="m">'+esc(x[1])+'</span>'+(x[2]?'<span class="note">'+esc(x[2])+'</span>':'')+'</li>'}
   function txtEx(x){return '<span class="tw2">'+wPlain(x)+'</span>（'+wRead(x)+'）'+(x[2]?' <span class="note">'+esc(x[2])+'</span>':'')}
   function kanjiGloss(it){
     var s=splitEx(it);
@@ -148,15 +147,17 @@ document.documentElement.classList.add("js");
       if(lessonSel!=='all'&&lessonSel!==L.lesson)return;
       out+='<div class="lesson-h"><h2>Bài '+L.lesson+' · '+L.vi+'</h2></div><div class="grid">';
       L.items.forEach(function(it){
-        out+='<div class="card" tabindex="0" aria-label="Chữ '+it.k+'">'+
-          '<div class="box" title="'+esc(it.tip||'')+'"><b>'+it.k+'</b><small>'+it.s+' nét</small></div>'+
-          '<dl class="kv hide">'+
-            '<div><dt>Hán Việt</dt><dd class="hv">'+it.hv+'</dd></div>'+
-            '<div><dt>Âm Nhật</dt><dd lang="ja">'+it.kun+'</dd></div>'+
-            '<div><dt>Âm Hán</dt><dd lang="ja">'+it.on+'</dd></div>'+
-          '</dl>'+
-          '<div class="exbox hide"><span class="exh">Ví dụ</span><ul class="ex">'+it.ex.map(exLi).join('')+'</ul></div>'+
-          '</div>';
+        // Same look as the kanji card on the home page.
+        out+='<div class="card kcard kc-card" tabindex="0" aria-label="Chữ '+it.k+'">'+
+          '<div class="kc-body"><span class="kc-lesson">'+it.s+' nét</span>'+
+          '<div class="kc-char" lang="ja" title="'+esc(it.tip||'')+'">'+it.k+'</div>'+
+          '<dl class="kc-info">'+
+            '<div><dt>Hán Việt</dt><dd class="kc-hv hide">'+it.hv+'</dd></div>'+
+            '<div><dt>Âm Nhật</dt><dd class="hide" lang="ja">'+it.kun+'</dd></div>'+
+            '<div><dt>Âm Hán</dt><dd class="hide" lang="ja">'+it.on+'</dd></div>'+
+            '<div><dt>Ví dụ</dt><dd class="kc-ex hide">'+it.ex.map(function(x){
+              return '<span class="kc-exi"><span lang="ja">'+plainRuby(esc(x[0]))+'</span><small>'+esc(x[1])+(x[2]?' · '+esc(x[2]):'')+'</small></span>'}).join('')+'</dd></div>'+
+          '</dl></div></div>';
       });
       out+='</div>';
     });
