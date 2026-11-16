@@ -3,12 +3,14 @@
   "use strict";
 
   /**
-   * macOS-style dock magnify: icons near the pointer grow and rise.
+   * macOS-style dock magnify: icons near the pointer grow and pop out.
+   * Works for the bottom dock (icons rise) and for the sidebar (icons pop out to the side): the
+   * direction follows the bar's own flex-direction, so it stays right when the layout changes.
    * Uses gsap.quickTo (one reusable tween per property) as the gsap-performance skill recommends.
    * Returns a cleanup function.
    */
-  function magnifyDock(dock, { range = 130, maxScale = 1.5, lift = 22 } = {}) {
-    const items = Array.from(dock.querySelectorAll(".dock-item"));
+  function magnifyDock(dock, { selector = ".dock-item", range = 130, maxScale = 1.5, lift = 22, out = -1 } = {}) {
+    const items = Array.from(dock.querySelectorAll(selector));
     const toScale = gsap.utils.pipe(
       gsap.utils.clamp(0, range),
       gsap.utils.mapRange(0, range, maxScale, 1)
@@ -18,25 +20,32 @@
     const setters = items.map((el) => {
       const sx = quick(el, "scaleX");
       const sy = quick(el, "scaleY");
-      return { scale: (v) => { sx(v); sy(v); }, y: quick(el, "y") };
+      return { scale: (v) => { sx(v); sy(v); }, x: quick(el, "x"), y: quick(el, "y") };
     });
     let centers = [];
+    let vertical = false;
 
     const measure = () => {
       // Untransformed offsets, read once, so the scaling itself does not feed back into the maths.
-      const left = dock.getBoundingClientRect().left + dock.clientLeft;
-      centers = items.map((el) => left + el.offsetLeft + el.offsetWidth / 2);
+      vertical = getComputedStyle(dock).flexDirection.startsWith("column");
+      const box = dock.getBoundingClientRect();
+      centers = items.map((el) => (vertical
+        ? box.top + dock.clientTop + el.offsetTop + el.offsetHeight / 2
+        : box.left + dock.clientLeft + el.offsetLeft + el.offsetWidth / 2));
     };
     const onMove = (e) => {
       if (!centers.length) measure();
+      const at = vertical ? e.clientY : e.clientX;
       items.forEach((_, i) => {
-        const s = toScale(Math.abs(e.clientX - centers[i]));
+        const s = toScale(Math.abs(at - centers[i]));
+        const shift = out * (s - 1) * lift;
         setters[i].scale(s);
-        setters[i].y(-(s - 1) * lift);
+        if (vertical) { setters[i].x(-shift); setters[i].y(0); }
+        else { setters[i].y(shift); setters[i].x(0); }
       });
     };
     const onLeave = () => {
-      setters.forEach((s) => { s.scale(1); s.y(0); });
+      setters.forEach((s) => { s.scale(1); s.x(0); s.y(0); });
       centers = [];
     };
 
@@ -49,6 +58,7 @@
       dock.removeEventListener("mousemove", onMove);
       dock.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("resize", onLeave);
+      onLeave();
     };
   }
 

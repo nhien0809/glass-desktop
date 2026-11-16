@@ -84,7 +84,7 @@
     $("#kChar").title = it.tip || "";
     $("#kHv").textContent = it.hv;
     $("#kOn").textContent = it.on;
-    $("#kKun").textContent = it.kun.split("、")[0];
+    $("#kKun").textContent = it.kun;
     $("#kLesson").textContent = `Bài ${it.l}`;
     $("#kCount").textContent = `${i + 1} / ${kanji.length}`;
     $("#kEx").innerHTML = `<span lang="ja">${toRuby(ex[0])}</span><small>${escapeHtml(ex[1])}</small>`;
@@ -192,7 +192,8 @@
         dock.addEventListener("mouseenter", finishIntro);
         cleanups.push(
           () => dock.removeEventListener("mouseenter", finishIntro),
-          GlassUI.magnifyDock(dock)
+          GlassUI.magnifyDock(dock),
+          GlassUI.magnifyDock($(".sidebar"), { selector: ".side-btn", range: 110, maxScale: 1.35, lift: 14 })
         );
       }
 

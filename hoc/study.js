@@ -232,6 +232,7 @@
         cleanups.push(
           () => dock.removeEventListener("mouseenter", finishIntro),
           GlassUI.magnifyDock(dock),
+          GlassUI.magnifyDock($(".sidebar"), { selector: ".side-btn", range: 110, maxScale: 1.35, lift: 14 }),
           GlassUI.hoverLift($("#kanji-out"), ".card", { y: -5 })
         );
       }
