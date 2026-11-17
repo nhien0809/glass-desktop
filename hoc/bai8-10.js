@@ -26,7 +26,8 @@
     }
     return a;
   };
-  const LESSONS = ["8", "9", "10"];
+  const LESSONS = ["8", "9", "10"]; // ngữ pháp
+  const VLESSONS = ["8", "9", "10", "11"]; // từ mới
 
   /* ---------- Reading words aloud (Japanese voice of the browser) ---------- */
   const canSpeak = "speechSynthesis" in window;
@@ -75,7 +76,7 @@
   const dirBtn = document.getElementById("tu-dir");
 
   let lesson = store("vl");
-  if (!LESSONS.includes(lesson) && lesson !== "all") lesson = lesson === "11" ? "all" : "8";
+  if (!VLESSONS.includes(lesson) && lesson !== "all") lesson = "8";
   let mode = store("vm") || "list";
   let hideMeaning = store("vh") === "1";
   let onlyNew = store("vo") === "1";
@@ -88,7 +89,7 @@
   }
   const count = (l) => words.filter((w) => l === "all" || w.l === l).length;
   function paintFilters() {
-    chips(lf, [["all", `Tất cả (${count("all")})`], ...LESSONS.map((l) => [l, `Bài ${l} (${count(l)})`])], lesson);
+    chips(lf, [["all", `Tất cả (${count("all")})`], ...VLESSONS.map((l) => [l, `Bài ${l} (${count(l)})`])], lesson);
     chips(mf, [["list", "Danh sách"], ["card", "Thẻ ghi nhớ"], ["quiz", "Kiểm tra"]], mode);
     hideBtn.setAttribute("aria-pressed", hideMeaning);
     hideBtn.hidden = mode !== "list";

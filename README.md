@@ -37,7 +37,7 @@ Chọn bài 8, 9, 10, 11 hoặc "Tất cả" ở góc trên. Mọi thứ chạy 
 
 ## Sổ học (`hoc/`)
 
-- **Từ mới** (bài 8–10, 212 từ theo chủ đề): danh sách có cách đọc, nghĩa, thể từ điển của động từ và nút nghe đọc; che nghĩa để tự kiểm tra; đánh dấu từ đã nhớ (lưu trên máy); thẻ ghi nhớ lật được; trắc nghiệm 10 câu Nhật → Việt hoặc Việt → Nhật.
+- **Từ mới** (bài 8–11, 261 từ theo chủ đề): danh sách có cách đọc, nghĩa, thể từ điển của động từ và nút nghe đọc; che nghĩa để tự kiểm tra; đánh dấu từ đã nhớ (lưu trên máy); thẻ ghi nhớ lật được; trắc nghiệm 10 câu Nhật → Việt hoặc Việt → Nhật.
 - **Ngữ pháp** (bài 8–10): mẫu câu, cách ghép, bảng chia thể từ điển / thể ない, ví dụ có furigana và nút nghe, cùng phần luyện tập chọn đáp án có giải thích ở cuối mỗi bài.
 - **Học chữ Hán**: 41 thẻ chữ Hán, lọc theo bài, chế độ tự kiểm tra.
 - **Bài đọc**: 11 bài đọc hiểu (mỗi bài 5 chữ Hán + 5 từ katakana), bản dịch, câu hỏi và đáp án kèm ngữ pháp. Di chuột (hoặc chạm) vào chữ Hán / katakana trong bài để xem cách đọc, âm Hán Việt, On/Kun và nghĩa.
