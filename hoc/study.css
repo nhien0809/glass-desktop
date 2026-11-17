@@ -629,3 +629,9 @@ article.gp { padding: 16px 18px 14px; border-radius: 22px; display: flex; flex-d
   .fc, .qz-card { min-height: 210px; border-radius: 24px; }
   article.gp, .pr { padding: 14px; }
 }
+
+/* Picture quiz: "Khó" badge */
+article.tc .eyebrow .hard {
+  display: inline-block; margin-left: 8px; padding: 1px 9px; border-radius: 999px;
+  background: var(--shu); color: #fff; font-size: 11px; letter-spacing: .04em; vertical-align: 1px;
+}

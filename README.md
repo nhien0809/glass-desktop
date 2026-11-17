@@ -41,7 +41,7 @@ Chọn bài 8, 9, 10, 11 hoặc "Tất cả" ở góc trên. Mọi thứ chạy 
 - **Ngữ pháp** (bài 8–10): mẫu câu, cách ghép, bảng chia thể từ điển / thể ない, ví dụ có furigana và nút nghe, cùng phần luyện tập chọn đáp án có giải thích ở cuối mỗi bài.
 - **Học chữ Hán**: 41 thẻ chữ Hán, lọc theo bài, chế độ tự kiểm tra.
 - **Bài đọc**: 11 bài đọc hiểu (mỗi bài 5 chữ Hán + 5 từ katakana), bản dịch, câu hỏi và đáp án kèm ngữ pháp. Di chuột (hoặc chạm) vào chữ Hán / katakana trong bài để xem cách đọc, âm Hán Việt, On/Kun và nghĩa.
-- **Tranh kiểm tra**: nhìn tranh trả lời câu hỏi, có gợi ý và đáp án.
+- **Tranh kiểm tra**: 28 tranh (bài 8–11) nhìn tranh trả lời câu hỏi, có gợi ý và đáp án; lọc “Câu khó” cho 8 tranh cần trả lời câu dài, nhiều mẫu ngữ pháp.
 
 ## Chuyển động (GSAP)
 
@@ -66,6 +66,7 @@ Rồi mở http://localhost:5173.
 - `assets/speak.js`: cửa sổ luyện nói (câu hỏi, giọng đọc, ghi âm, chấm).
 - `assets/characters.js`: nhân vật chibi đi lại.
 - `assets/music.js`: trình phát nhạc (file từ máy, lưu trong IndexedDB).
+- `hoc/tranh-them.js`: tranh kiểm tra 11–28 (vẽ SVG) và câu hỏi.
 - `hoc/bai8-10-data.js`, `hoc/bai8-10.js`: từ mới và ngữ pháp bài 8–10 (lấy từ NEW WORDS LIST Dekiru Nihongo và Tổng hợp ngữ pháp JPD133).
 - `assets/tour.js`: hướng dẫn từng bước (lần đầu vào trang, nút Hướng dẫn).
 - `assets/hero.webp`: nhân vật ở giữa (ảnh nền trong suốt bạn gửi).

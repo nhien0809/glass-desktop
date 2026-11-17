@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sổ học · Nihongo Desk</title>
-<meta name="description" content="Từ mới và ngữ pháp bài 8–10, 41 chữ Hán, 11 bài đọc và 10 tranh kiểm tra JPD133 (Dekiru Nihongo bài 8–11).">
+<meta name="description" content="Từ mới và ngữ pháp bài 8–10, 41 chữ Hán, 11 bài đọc và 28 tranh kiểm tra JPD133 (Dekiru Nihongo bài 8–11).">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="../style.css?v=24">
-<link rel="stylesheet" href="study.css?v=15">
+<link rel="stylesheet" href="study.css?v=16">
 <script>
 document.documentElement.classList.add("js");
 /* ?bai=8 from the home lesson cards: preselect that lesson in every filter, then tidy the URL. */
@@ -265,6 +265,7 @@ document.documentElement.classList.add("js");
 })();
 </script>
 
+<script src="tranh-them.js?v=1"></script>
 <script>
 /* ---------- Tranh kiểm tra ngữ pháp ---------- */
 (function(){
@@ -434,16 +435,24 @@ document.documentElement.classList.add("js");
       g:[[B11+' · mục 4','イA い ＋ とき','あたまが いたい とき = lúc bị đau đầu.'],[B8+' · mục 3','N1 は N2 が A です','あたまが いたい: tả trạng thái của một bộ phận cơ thể.']]}]}
   ];
 
+  /* Tranh thêm (tranh-them.js) */
+  if(window.TRANH_THEM){var X=window.TRANH_THEM({svg:svg,T:T,A:A,P:P,cup:cup,r:r});
+    for(var k in X.S)S[k]=X.S[k];
+    X.Q.forEach(function(c){c.n='Tranh '+c.id.slice(1)+' · Bài '+c.lesson;Q.push(c)});}
+  Q.forEach(function(c){if(c.id==='t5')c.also='9'});
+  function inL(c,l){return l==='all'||c.lesson===l||c.also===l||(l==='hard'&&c.hard)}
+  function cnt(l){return Q.filter(function(c){return inL(c,l)}).length}
+
   var sel='all';
   try{sel=localStorage.getItem('tl')||'all'}catch(e){}
   var tf=document.getElementById('tranh-filter');
-  var opts=[['all','Tất cả (10)'],['8','Bài 8'],['9','Bài 9'],['10','Bài 10'],['11','Bài 11']];
+  var opts=[['all','Tất cả ('+cnt('all')+')'],['8','Bài 8 ('+cnt('8')+')'],['9','Bài 9 ('+cnt('9')+')'],['10','Bài 10 ('+cnt('10')+')'],['11','Bài 11 ('+cnt('11')+')'],['hard','Câu khó ('+cnt('hard')+')']];
   tf.innerHTML=opts.map(function(o){return '<button class="chip" data-l="'+o[0]+'" aria-pressed="'+(o[0]===sel)+'">'+o[1]+'</button>'}).join('');
   tf.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;sel=b.dataset.l;try{localStorage.setItem('tl',sel)}catch(err){}
     tf.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});render()});
   function render(){
-    document.getElementById('tranh-out').innerHTML=Q.filter(function(c){return sel==='all'||c.lesson===sel||(sel==='9'&&c.id==='t5')}).map(function(c){
-      return '<article class="tc" id="'+c.id+'"><div class="eyebrow">'+c.n+'</div><div>'+S[c.id]+'</div><div class="tqs">'+
+    document.getElementById('tranh-out').innerHTML=Q.filter(function(c){return inL(c,sel)}).map(function(c){
+      return '<article class="tc" id="'+c.id+'"><div class="eyebrow">'+c.n+(c.hard?' <span class="hard">Khó</span>':'')+'</div><div>'+S[c.id]+'</div><div class="tqs">'+
         c.qs.map(function(q,i){var id='tin-'+c.id+'-'+(i+1);
           return '<div class="q tq"><label class="qj" for="'+id+'">'+(c.qs.length>1?(i+1)+'. ':'')+esc(q.q)+'</label>'+
             '<input class="tin" id="'+id+'" lang="ja" autocomplete="off" placeholder="Câu trả lời của bạn">'+
