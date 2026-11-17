@@ -18,7 +18,9 @@
     { page: "home", el: ".dock", title: "Công cụ tra cứu", text: "Mazii, Google Dịch, Jisho, NHK Easy, YouTube, Spotify: mở trong tab mới." },
     // Study pages
     { page: "hoc", title: "Sổ học", text: "Mọi thứ của bài 8–11 ở đây. Xem nhanh các phần nhé." },
-    { page: "hoc", el: ".tabs", title: "Ba phần học", text: "Học chữ Hán, Bài đọc và Tranh kiểm tra." },
+    { page: "hoc", el: ".tabs", title: "Năm phần học", text: "Từ mới, Ngữ pháp (bài 8–10), Chữ Hán, Bài đọc và Tranh kiểm tra." },
+    { page: "hoc", el: "#view-tu:not([hidden]) #tu-mode", title: "Ba cách học từ mới", text: "Danh sách theo chủ đề (bấm loa để nghe), Thẻ ghi nhớ để lật thẻ, và Kiểm tra trắc nghiệm 10 câu. Từ nào đã nhớ thì đánh dấu lại." },
+    { page: "hoc", el: "#view-tu:not([hidden]) .tu-opts", title: "Tự kiểm tra", text: "Che nghĩa để tự đoán, chỉ học các từ chưa nhớ, hoặc đổi chiều hỏi Nhật → Việt / Việt → Nhật." },
     { page: "hoc", el: "#view-kanji:not([hidden]) #lesson-filter", title: "Chọn bài", text: "Lọc chữ Hán theo bài 8, 9, 10, 11 hoặc xem tất cả." },
     { page: "hoc", el: "#view-kanji:not([hidden]) #t-quiz", title: "Tự kiểm tra", text: "Che cách đọc và ví dụ. Nhìn chữ, tự nói rồi bấm vào thẻ để xem đáp án." },
     { page: "hoc", el: "#t-hl", title: "Tô màu chữ", text: "Trong bài đọc, chữ Hán và katakana được tô màu. Rê chuột (hoặc chạm) vào chữ để xem cách đọc và nghĩa." },

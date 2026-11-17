@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sổ học · Nihongo Desk</title>
-<meta name="description" content="41 chữ Hán, 11 bài đọc và 10 tranh kiểm tra JPD133 (Dekiru Nihongo bài 8–11).">
+<meta name="description" content="Từ mới và ngữ pháp bài 8–10, 41 chữ Hán, 11 bài đọc và 10 tranh kiểm tra JPD133 (Dekiru Nihongo bài 8–11).">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="../style.css?v=24">
-<link rel="stylesheet" href="study.css?v=14">
+<link rel="stylesheet" href="study.css?v=15">
 <script>
 document.documentElement.classList.add("js");
 /* ?bai=8 from the home lesson cards: preselect that lesson in every filter, then tidy the URL. */
 (function () {
   var m = /[?&]bai=(8|9|10|11)\b/.exec(location.search);
   if (!m) return;
-  try { ["kl", "dl", "tl"].forEach(function (k) { localStorage.setItem(k, m[1]); }); } catch (e) {}
+  try { ["kl", "dl", "tl", "vl", "gl"].forEach(function (k) { localStorage.setItem(k, m[1]); }); } catch (e) {}
   history.replaceState(null, "", location.pathname + location.hash);
 })();
 </script>
@@ -41,7 +41,7 @@ document.documentElement.classList.add("js");
   <header class="top">
     <div class="top-title">
       <a class="back-home" href="../">← Trang chủ</a>
-      <h1>Kanji &amp; Đọc hiểu</h1>
+      <h1>Sổ học</h1>
       <p class="subtitle">JPD133 · Dekiru Nihongo bài 8–11</p>
     </div>
     <div class="top-side" aria-hidden="true">
@@ -52,16 +52,41 @@ document.documentElement.classList.add("js");
 
   <div class="bar">
     <div class="tabs" role="tablist">
-      <button class="tab" role="tab" id="tab-kanji" data-view="kanji">Học chữ Hán</button>
+      <button class="tab" role="tab" id="tab-tu" data-view="tu">Từ mới</button>
+      <button class="tab" role="tab" id="tab-np" data-view="np">Ngữ pháp</button>
+      <button class="tab" role="tab" id="tab-kanji" data-view="kanji">Chữ Hán</button>
       <button class="tab" role="tab" id="tab-doc" data-view="doc">Bài đọc</button>
-      <button class="tab" role="tab" id="tab-tranh" data-view="tranh">Tranh kiểm tra</button>
+      <button class="tab" role="tab" id="tab-tranh" data-view="tranh">Tranh</button>
     </div>
     <div class="toggles">
       <button class="chip" id="t-hl" aria-pressed="true">Tô màu chữ Hán / Katakana</button>
     </div>
   </div>
 
-  <section id="view-kanji">
+  <section id="view-tu" hidden>
+    <div class="sub">
+      <div class="filters" id="tu-lesson"></div>
+      <div class="filters" id="tu-mode"></div>
+    </div>
+    <div class="sub tu-opts">
+      <div class="filters">
+        <button class="chip" id="tu-hide" aria-pressed="false">Che nghĩa</button>
+        <button class="chip" id="tu-only" aria-pressed="false">Chỉ từ chưa nhớ</button>
+        <button class="chip" id="tu-dir">Nhật → Việt</button>
+      </div>
+    </div>
+    <div id="tu-out"></div>
+  </section>
+
+  <section id="view-np" hidden>
+    <div class="sub">
+      <div class="filters" id="np-lesson"></div>
+      <p class="hint">Đọc mẫu câu và ví dụ (bấm loa để nghe), rồi làm phần luyện tập cuối mỗi bài.</p>
+    </div>
+    <div id="np-out"></div>
+  </section>
+
+  <section id="view-kanji" hidden>
     <div class="sub">
       <div class="filters" id="lesson-filter"></div>
       <button class="chip" id="t-quiz" aria-pressed="false">Chế độ tự kiểm tra</button>
@@ -228,11 +253,10 @@ document.documentElement.classList.add("js");
   bindToggle('t-hl','hl',function(x){document.getElementById('doc-out').classList.toggle('hl',x);document.getElementById('kanji-out').classList.toggle('hl',x)});
 
   /* ---------- Tabs (hash) ---------- */
+  var VIEWS=['tu','np','kanji','doc','tranh'];
   function show(){
-    var v=location.hash==='#doc'?'doc':location.hash==='#tranh'?'tranh':'kanji';
-    document.getElementById('view-kanji').hidden=v!=='kanji';
-    document.getElementById('view-doc').hidden=v!=='doc';
-    document.getElementById('view-tranh').hidden=v!=='tranh';
+    var v=location.hash.slice(1);if(VIEWS.indexOf(v)<0)v='tu';
+    VIEWS.forEach(function(x){document.getElementById('view-'+x).hidden=x!==v});
     document.querySelectorAll('.tab').forEach(function(t){t.setAttribute('aria-selected',t.dataset.view===v)});
   }
   document.querySelector('.tabs').addEventListener('click',function(e){var b=e.target.closest('.tab');if(!b)return;location.hash=b.dataset.view});
@@ -441,7 +465,9 @@ document.documentElement.classList.add("js");
 <script src="../assets/speak.js?v=11"></script>
 <script src="../assets/characters.js?v=14"></script>
 <script src="../assets/music.js?v=21"></script>
-<script src="../assets/tour.js?v=2"></script>
-<script src="study.js?v=12"></script>
+<script src="../assets/tour.js?v=3"></script>
+<script src="bai8-10-data.js?v=1"></script>
+<script src="bai8-10.js?v=1"></script>
+<script src="study.js?v=13"></script>
 </body>
 </html>

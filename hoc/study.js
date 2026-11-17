@@ -22,8 +22,11 @@
   setInterval(tick, 1000);
 
   /* ---------- Sidebar: highlight the current section ---------- */
-  const views = { kanji: "#view-kanji", doc: "#view-doc", tranh: "#view-tranh" };
-  const currentView = () => (location.hash === "#doc" ? "doc" : location.hash === "#tranh" ? "tranh" : "kanji");
+  const views = { tu: "#view-tu", np: "#view-np", kanji: "#view-kanji", doc: "#view-doc", tranh: "#view-tranh" };
+  const currentView = () => {
+    const v = location.hash.slice(1);
+    return views[v] ? v : "tu";
+  };
   function markSidebar() {
     const v = currentView();
     $$(".sidebar [data-view]").forEach((a) => {
@@ -163,7 +166,7 @@
         const section = container.closest("section");
         if (!section || section.hidden) return;
         const limit = window.innerHeight * 1.2;
-        const items = $$(".lesson-h, .card, article, .howto", section)
+        const items = $$(".lesson-h, .card, article, .howto, .vc, .pr", section)
           .filter((el) => el.getBoundingClientRect().top < limit)
           .slice(0, 14);
         if (!items.length) return;
@@ -190,7 +193,7 @@
         .from(".dock-item", { autoAlpha: 0, y: 24, duration: 0.5, ease: "back.out(2)", stagger: 0.05 }, "<0.2");
 
       /* Re-reveal whenever the notebook re-renders a list (filters) or the tab changes. */
-      const outs = ["#kanji-out", "#doc-out", "#tranh-out"].map((s) => $(s));
+      const outs = ["#tu-out", "#np-out", "#kanji-out", "#doc-out", "#tranh-out"].map((s) => $(s));
       const observer = new MutationObserver((records) => {
         const targets = new Set(records.map((r) => r.target));
         targets.forEach(revealIn);
